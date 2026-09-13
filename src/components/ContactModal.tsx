@@ -1,0 +1,168 @@
+import React, { useState } from 'react';
+import { X, Mail, Send, CheckCircle2, Phone, MapPin } from 'lucide-react';
+
+interface ContactModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    projectType: 'Feature Film',
+    message: '',
+  });
+
+  if (!isOpen) return null;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      // Allow user to see confirmation
+    }, 400);
+  };
+
+  return (
+    <div
+      id="contact-modal-overlay"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={onClose}
+    >
+      <div
+        id="contact-modal-dialog"
+        className="relative w-full max-w-lg bg-[#111317] border border-stone-700/80 rounded-2xl p-6 sm:p-8 text-neutral-100 shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Subtle decorative glow */}
+        <div className="absolute -top-16 -right-16 w-36 h-36 bg-[#F3B544]/15 rounded-full blur-3xl pointer-events-none" />
+
+        {/* Close button */}
+        <button
+          id="close-contact-modal-btn"
+          onClick={onClose}
+          className="absolute top-5 right-5 p-1.5 text-stone-400 hover:text-white rounded-full hover:bg-white/10 transition-colors"
+          aria-label="Close dialog"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {submitted ? (
+          <div className="py-8 text-center flex flex-col items-center">
+            <CheckCircle2 className="w-14 h-14 text-[#F3B544] mb-4" />
+            <h3 className="font-serif-display text-2xl font-semibold mb-2">Message Sent</h3>
+            <p className="text-stone-300 text-sm max-w-sm mb-6">
+              Thank you for reaching out. Kehinde David Aderibigbe will review your inquiry and get back to you shortly.
+            </p>
+            <button
+              id="close-success-btn"
+              onClick={() => {
+                setSubmitted(false);
+                onClose();
+              }}
+              className="px-6 py-2.5 bg-[#F3B544] text-[#120E0A] font-medium rounded-full text-sm hover:bg-[#ffc355] transition-all"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <div>
+            <div className="mb-6">
+              <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-[#F3B544]">
+                Screenwriter & Storyteller
+              </span>
+              <h2 className="font-serif-display text-2xl sm:text-3xl font-semibold mt-1">
+                Let's Build a Story
+              </h2>
+              <p className="text-stone-300 text-sm mt-1.5 leading-relaxed">
+                Available for screenplay commissions, writers' room staffing, script doctoring, and story treatments.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1.5 font-medium">
+                  Your Name
+                </label>
+                <input
+                  id="contact-form-name"
+                  required
+                  type="text"
+                  placeholder="e.g. Maya Lin"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-[#181a20] border border-stone-700 rounded-lg px-3.5 py-2.5 text-sm text-neutral-100 placeholder-stone-500 focus:outline-none focus:border-[#F3B544] transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1.5 font-medium">
+                  Email Address
+                </label>
+                <input
+                  id="contact-form-email"
+                  required
+                  type="email"
+                  placeholder="e.g. producer@studio.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-[#181a20] border border-stone-700 rounded-lg px-3.5 py-2.5 text-sm text-neutral-100 placeholder-stone-500 focus:outline-none focus:border-[#F3B544] transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1.5 font-medium">
+                  Project Type
+                </label>
+                <select
+                  id="contact-form-type"
+                  value={formData.projectType}
+                  onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                  className="w-full bg-[#181a20] border border-stone-700 rounded-lg px-3.5 py-2.5 text-sm text-neutral-100 focus:outline-none focus:border-[#F3B544] transition-colors"
+                >
+                  <option value="Feature Film">Feature Film Screenplay</option>
+                  <option value="TV Pilot">Television Pilot / Series Bible</option>
+                  <option value="Script Polish">Script Polish / Doctoring</option>
+                  <option value="Story Treatment">Original Concept & Treatment</option>
+                  <option value="General Inquiry">General Collaboration / Representation</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-stone-400 mb-1.5 font-medium">
+                  Brief Synopsis or Inquiry
+                </label>
+                <textarea
+                  id="contact-form-message"
+                  required
+                  rows={3}
+                  placeholder="Share a brief overview of your project, timeline, or vision..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full bg-[#181a20] border border-stone-700 rounded-lg px-3.5 py-2.5 text-sm text-neutral-100 placeholder-stone-500 focus:outline-none focus:border-[#F3B544] transition-colors resize-none"
+                />
+              </div>
+
+              <div className="pt-2 flex items-center justify-between">
+                <span className="text-[12px] text-stone-400 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-[#F3B544]" />
+                  Direct: kennydaviddesigns@gmail.com
+                </span>
+                <button
+                  id="submit-contact-btn"
+                  type="submit"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#F3B544] text-[#120E0A] font-semibold text-sm rounded-full hover:bg-[#ffc355] transition-all cursor-pointer"
+                >
+                  <span>Send</span>
+                  <Send className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

@@ -1,0 +1,6 @@
+{
+  "name": "Kehinde David Aderibigbe Portfolio",
+  "description": "Portfolio for Kehinde David Aderibigbe, screenwriter and storyteller. Features the cinematic hero section, About Me, Screenwriting & Story Development services, Selected Work showcase, Creative Process, and Connect section.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

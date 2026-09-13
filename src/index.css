@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-script: 'Caveat', cursive;
+  }
+}
+
+.font-serif-display {
+  font-family: 'Playfair Display', Georgia, -apple-system, serif;
+}
+
+.font-script-quote {
+  font-family: 'Caveat', cursive, sans-serif;
+}
+
+.font-sans-ui {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
