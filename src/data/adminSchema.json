@@ -1,0 +1,789 @@
+{
+  "version": 1,
+  "sections": [
+    {
+      "id": "site",
+      "label": "Site & Branding",
+      "fields": [
+        {
+          "key": "siteName",
+          "label": "Website Name",
+          "type": "text"
+        },
+        {
+          "key": "siteTitle",
+          "label": "SEO Page Title",
+          "type": "text"
+        },
+        {
+          "key": "siteDescription",
+          "label": "SEO Meta Description",
+          "type": "textarea"
+        },
+        {
+          "key": "authorName",
+          "label": "Author Name",
+          "type": "text"
+        },
+        {
+          "key": "authorRole",
+          "label": "Author Role",
+          "type": "text"
+        },
+        {
+          "key": "brandTitle",
+          "label": "Navbar Brand Title",
+          "type": "text"
+        },
+        {
+          "key": "brandSubtitle",
+          "label": "Navbar Brand Subtitle",
+          "type": "text"
+        },
+        {
+          "key": "navigation",
+          "label": "Navigation Links",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Identifier",
+              "type": "text"
+            },
+            {
+              "key": "label",
+              "label": "Display Label",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hero",
+      "label": "Hero Section",
+      "fields": [
+        {
+          "key": "backgroundImage",
+          "label": "Hero Background Image",
+          "type": "image"
+        },
+        {
+          "key": "eyebrow",
+          "label": "Eyebrow Label",
+          "type": "text"
+        },
+        {
+          "key": "headlinePrefix",
+          "label": "Headline Prefix",
+          "type": "text"
+        },
+        {
+          "key": "headlineMiddle",
+          "label": "Headline Middle",
+          "type": "text"
+        },
+        {
+          "key": "headlineHighlighted",
+          "label": "Headline Highlighted Word",
+          "type": "text"
+        },
+        {
+          "key": "description",
+          "label": "Hero Biography Description",
+          "type": "textarea"
+        },
+        {
+          "key": "primaryCta",
+          "label": "Primary Button Text",
+          "type": "text"
+        },
+        {
+          "key": "secondaryCta",
+          "label": "Secondary Button Text",
+          "type": "text"
+        },
+        {
+          "key": "quoteWord1",
+          "label": "Handwritten Quote Word 1",
+          "type": "text"
+        },
+        {
+          "key": "quoteWord2",
+          "label": "Handwritten Quote Word 2",
+          "type": "text"
+        },
+        {
+          "key": "quoteWord3",
+          "label": "Handwritten Quote Word 3",
+          "type": "text"
+        },
+        {
+          "key": "quoteWord4",
+          "label": "Handwritten Quote Word 4",
+          "type": "text"
+        },
+        {
+          "key": "quoteWord5",
+          "label": "Handwritten Quote Word 5",
+          "type": "text"
+        },
+        {
+          "key": "availabilityNotice",
+          "label": "Availability Status Notice",
+          "type": "text"
+        },
+        {
+          "key": "scrollPrompt",
+          "label": "Scroll Prompt",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "label": "About Section",
+      "fields": [
+        {
+          "key": "image",
+          "label": "Notebook & Clapperboard Image",
+          "type": "image"
+        },
+        {
+          "key": "eyebrow",
+          "label": "Eyebrow",
+          "type": "text"
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "key": "bioLead",
+          "label": "Lead Name",
+          "type": "text"
+        },
+        {
+          "key": "bioText",
+          "label": "Biography Text",
+          "type": "textarea"
+        },
+        {
+          "key": "pillars",
+          "label": "Core Identity Pillars",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Pillar ID",
+              "type": "text"
+            },
+            {
+              "key": "titleLine1",
+              "label": "Title Line 1",
+              "type": "text"
+            },
+            {
+              "key": "titleLine2",
+              "label": "Title Line 2",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "key": "modalLead",
+          "label": "Modal Subtitle",
+          "type": "text"
+        },
+        {
+          "key": "modalParagraph1",
+          "label": "Modal Biography Paragraph 1",
+          "type": "textarea"
+        },
+        {
+          "key": "modalParagraph2",
+          "label": "Modal Biography Paragraph 2",
+          "type": "textarea"
+        },
+        {
+          "key": "modalPillarsTitle",
+          "label": "Modal Pillars Title",
+          "type": "text"
+        },
+        {
+          "key": "modalPillars",
+          "label": "Modal Storytelling Pillars",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "ID",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Pillar Title",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "label": "Pillar Description",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "modalCtaText",
+          "label": "Modal Connect Button Text",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "label": "Services Section",
+      "fields": [
+        {
+          "key": "backgroundImage",
+          "label": "Film Set Background Image",
+          "type": "image"
+        },
+        {
+          "key": "eyebrow",
+          "label": "Eyebrow",
+          "type": "text"
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "key": "description",
+          "label": "Description",
+          "type": "textarea"
+        },
+        {
+          "key": "buttonText",
+          "label": "Button Text",
+          "type": "text"
+        },
+        {
+          "key": "items",
+          "label": "Services Offered",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Service ID",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Service Title",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "label": "Short Description",
+              "type": "textarea"
+            },
+            {
+              "key": "badge",
+              "label": "Format Badge",
+              "type": "text"
+            },
+            {
+              "key": "details",
+              "label": "Full Details",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "modalHeadline",
+          "label": "Modal Headline",
+          "type": "text"
+        },
+        {
+          "key": "modalCtaText",
+          "label": "Modal Action Button Text",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "selectedWork",
+      "label": "Selected Work Section",
+      "fields": [
+        {
+          "key": "eyebrow",
+          "label": "Eyebrow",
+          "type": "text"
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "key": "subtitle",
+          "label": "Subtitle",
+          "type": "text"
+        },
+        {
+          "key": "viewAllText",
+          "label": "View All Projects Button",
+          "type": "text"
+        },
+        {
+          "key": "featuredScripts",
+          "label": "Featured Showcase Scripts",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Script ID",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Script Title",
+              "type": "text"
+            },
+            {
+              "key": "genre",
+              "label": "Genre",
+              "type": "text"
+            },
+            {
+              "key": "format",
+              "label": "Format",
+              "type": "text"
+            },
+            {
+              "key": "image",
+              "label": "Film Still Image",
+              "type": "image"
+            },
+            {
+              "key": "logline",
+              "label": "Logline",
+              "type": "textarea"
+            },
+            {
+              "key": "pages",
+              "label": "Script Length / Pages",
+              "type": "text"
+            },
+            {
+              "key": "tone",
+              "label": "Tone Keywords",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "key": "catalogScripts",
+          "label": "Full Catalog Scripts",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Script ID",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Script Title",
+              "type": "text"
+            },
+            {
+              "key": "genre",
+              "label": "Genre",
+              "type": "text"
+            },
+            {
+              "key": "format",
+              "label": "Format",
+              "type": "text"
+            },
+            {
+              "key": "status",
+              "label": "Development Status",
+              "type": "text"
+            },
+            {
+              "key": "logline",
+              "label": "Logline",
+              "type": "textarea"
+            },
+            {
+              "key": "accolade",
+              "label": "Accolade or Recognition",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "creativeProcess",
+      "label": "Creative Process Section",
+      "fields": [
+        {
+          "key": "backgroundImage",
+          "label": "Panorama Background Image",
+          "type": "image"
+        },
+        {
+          "key": "eyebrow",
+          "label": "Eyebrow",
+          "type": "text"
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "key": "steps",
+          "label": "Creative Steps",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Step ID",
+              "type": "text"
+            },
+            {
+              "key": "number",
+              "label": "Step Number",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Step Title",
+              "type": "text"
+            },
+            {
+              "key": "subtitle",
+              "label": "Step Subtitle",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connect",
+      "label": "Connect & Footer Section",
+      "fields": [
+        {
+          "key": "eyebrow",
+          "label": "Eyebrow",
+          "type": "text"
+        },
+        {
+          "key": "headline",
+          "label": "Headline",
+          "type": "text"
+        },
+        {
+          "key": "description",
+          "label": "Description",
+          "type": "textarea"
+        },
+        {
+          "key": "buttonText",
+          "label": "Button Text",
+          "type": "text"
+        },
+        {
+          "key": "signatureName",
+          "label": "Signature Name",
+          "type": "text"
+        },
+        {
+          "key": "socialLinks",
+          "label": "Social Media Links",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "ID",
+              "type": "text"
+            },
+            {
+              "key": "platform",
+              "label": "Platform",
+              "type": "text"
+            },
+            {
+              "key": "url",
+              "label": "URL",
+              "type": "url"
+            }
+          ]
+        },
+        {
+          "key": "footerTagline",
+          "label": "Footer Tagline",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "contactModal",
+      "label": "Contact Modal Dialog",
+      "fields": [
+        {
+          "key": "badge",
+          "label": "Badge Text",
+          "type": "text"
+        },
+        {
+          "key": "title",
+          "label": "Dialog Title",
+          "type": "text"
+        },
+        {
+          "key": "description",
+          "label": "Dialog Description",
+          "type": "textarea"
+        },
+        {
+          "key": "directEmail",
+          "label": "Direct Email",
+          "type": "email"
+        },
+        {
+          "key": "successTitle",
+          "label": "Submission Success Title",
+          "type": "text"
+        },
+        {
+          "key": "successMessage",
+          "label": "Submission Success Message",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "id": "contactInfo",
+      "label": "Contact Information",
+      "fields": [
+        {
+          "key": "email",
+          "label": "Primary Contact Email",
+          "type": "email"
+        },
+        {
+          "key": "location",
+          "label": "Location / Base",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "label": "Footer & Legal",
+      "fields": [
+        {
+          "key": "brandPillars",
+          "label": "Brand Pillars",
+          "type": "array",
+          "fields": [
+            {
+              "key": "pillar",
+              "label": "Pillar Word",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "key": "copyright",
+          "label": "Copyright Notice",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "aboutModal",
+      "label": "About Dialog Details",
+      "fields": [
+        {
+          "key": "badge",
+          "label": "Badge Text",
+          "type": "text"
+        },
+        {
+          "key": "title",
+          "label": "Modal Title",
+          "type": "text"
+        },
+        {
+          "key": "paragraphs",
+          "label": "Biography Paragraphs",
+          "type": "array",
+          "fields": [
+            {
+              "key": "paragraph",
+              "label": "Paragraph Text",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "pillarsHeading",
+          "label": "Pillars Subheading",
+          "type": "text"
+        },
+        {
+          "key": "pillars",
+          "label": "Pillars List",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Pillar ID",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Pillar Title",
+              "type": "text"
+            },
+            {
+              "key": "desc",
+              "label": "Pillar Description",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "buttonText",
+          "label": "Action Button Text",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "servicesModal",
+      "label": "Services Dialog Details",
+      "fields": [
+        {
+          "key": "badge",
+          "label": "Badge Text",
+          "type": "text"
+        },
+        {
+          "key": "title",
+          "label": "Modal Title",
+          "type": "text"
+        },
+        {
+          "key": "offerings",
+          "label": "Service Offerings",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Service ID",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Service Title",
+              "type": "text"
+            },
+            {
+              "key": "tag",
+              "label": "Service Tag",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "label": "Description",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "key": "buttonText",
+          "label": "Action Button Text",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "workPreviewModal",
+      "label": "Screenplay Catalog Dialog",
+      "fields": [
+        {
+          "key": "badge",
+          "label": "Badge Text",
+          "type": "text"
+        },
+        {
+          "key": "title",
+          "label": "Modal Title",
+          "type": "text"
+        },
+        {
+          "key": "scripts",
+          "label": "Script Catalogue",
+          "type": "array",
+          "fields": [
+            {
+              "key": "id",
+              "label": "Script ID",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "label": "Script Title",
+              "type": "text"
+            },
+            {
+              "key": "genre",
+              "label": "Genre",
+              "type": "text"
+            },
+            {
+              "key": "format",
+              "label": "Format & Length",
+              "type": "text"
+            },
+            {
+              "key": "status",
+              "label": "Development Status",
+              "type": "text"
+            },
+            {
+              "key": "logline",
+              "label": "Logline",
+              "type": "textarea"
+            },
+            {
+              "key": "accolade",
+              "label": "Accolade / Placement",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "key": "note",
+          "label": "Footer Note",
+          "type": "text"
+        },
+        {
+          "key": "requestButtonText",
+          "label": "Request Button Text",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}

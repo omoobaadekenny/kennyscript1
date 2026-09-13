@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
 
 interface NavbarProps {
   onNavClick?: (navItem: string) => void;
@@ -12,7 +13,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = ['Home', 'About', 'My Work', 'Services', 'Contact'];
+  const navItems = siteContent.site?.navigation?.map((n) => n.label) || [
+    'Home',
+    'About',
+    'My Work',
+    'Services',
+    'Contact',
+  ];
+
+  const brandTitle = siteContent.site?.brandTitle || 'KEHINDE DAVID ADERIBIGBE';
+  const brandSubtitle = siteContent.site?.brandSubtitle || 'SCREENWRITER | STORYTELLER';
 
   const handleItemClick = (item: string) => {
     if (onNavClick) {
@@ -27,10 +37,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Logo / Name Branding */}
         <div id="nav-brand" className="flex flex-col group cursor-pointer" onClick={() => handleItemClick('Home')}>
           <span className="font-sans-ui text-sm sm:text-base md:text-[17px] tracking-[0.16em] uppercase font-semibold text-neutral-100 transition-colors duration-200 group-hover:text-[#F3B544]">
-            KEHINDE DAVID ADERIBIGBE
+            {brandTitle}
           </span>
           <span className="font-sans-ui text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-stone-400 font-medium mt-0.5">
-            SCREENWRITER <span className="text-stone-500 mx-1">|</span> STORYTELLER
+            {brandSubtitle}
           </span>
         </div>
 

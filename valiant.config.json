@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "siteName": "Kehinde David Aderibigbe Portfolio",
+  "contentPath": "src/data/siteContent.json",
+  "schemaPath": "src/data/adminSchema.json",
+  "connected": false
+}

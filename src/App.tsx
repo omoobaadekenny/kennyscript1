@@ -16,12 +16,17 @@ import { SelectedWorkSection } from './components/SelectedWorkSection';
 import { CreativeProcessSection } from './components/CreativeProcessSection';
 import { ConnectSection } from './components/ConnectSection';
 import heroBgImage from './assets/images/screenwriter_hero_1789318514729.jpg';
+import siteContent from './data/siteContent.json';
 
 export default function App() {
   const [activeNav, setActiveNav] = useState('Home');
   const [contactOpen, setContactOpen] = useState(false);
   const [workOpen, setWorkOpen] = useState(false);
   const [infoType, setInfoType] = useState<'About' | 'Services' | null>(null);
+
+  const hero = siteContent.hero;
+  const bgImage = hero.backgroundImage || heroBgImage;
+  const bgFallback = hero.backgroundFallback || '/hero-bg.jpg';
 
   // Monitor scroll position to update active navigation
   useEffect(() => {
@@ -113,9 +118,9 @@ export default function App() {
           {/* Photorealistic Hero Background */}
           <img
             id="hero-background-image"
-            src={heroBgImage}
+            src={bgImage}
             onError={(e) => {
-              e.currentTarget.src = '/hero-bg.jpg';
+              e.currentTarget.src = bgFallback;
             }}
             alt="Kehinde David Aderibigbe at study desk"
             referrerPolicy="no-referrer"
@@ -161,7 +166,7 @@ export default function App() {
                   id="hero-eyebrow"
                   className="font-sans-ui text-xs sm:text-[13px] tracking-[0.24em] uppercase font-semibold text-stone-300/90"
                 >
-                  WELCOME TO MY PORTFOLIO
+                  {hero.eyebrow}
                 </span>
               </div>
 
@@ -170,10 +175,10 @@ export default function App() {
                 id="hero-headline"
                 className="font-serif-display text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[76px] font-normal leading-[1.06] tracking-[-0.015em] text-neutral-100"
               >
-                I Turn Ideas Into <br className="hidden sm:inline" />
-                Stories Worth{' '}
+                {hero.headlinePrefix || 'I Turn Ideas Into'} <br className="hidden sm:inline" />
+                {hero.headlineMiddle || 'Stories Worth'}{' '}
                 <span className="relative inline-block text-[#F3B544] font-normal">
-                  Watching.
+                  {hero.headlineHighlighted || 'Watching.'}
                   {/* Hand-drawn Golden Underline Swoosh */}
                   <svg
                     id="hero-watching-underline"
@@ -204,9 +209,7 @@ export default function App() {
                 id="hero-description"
                 className="font-sans-ui text-stone-300 text-sm sm:text-base md:text-[17px] leading-relaxed max-w-xl mt-6 sm:mt-7 font-normal"
               >
-                I'm Kehinde David Aderibigbe, a screenwriter with a passion for
-                crafting compelling stories, memorable characters, and cinematic
-                experiences that stay with you.
+                {hero.description}
               </p>
 
               {/* Call To Action Buttons */}
@@ -221,7 +224,7 @@ export default function App() {
                   onClick={() => setWorkOpen(true)}
                   className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-3.5 rounded-full bg-[#F3B544] hover:bg-[#ffbe4d] text-[#14110E] font-semibold text-sm sm:text-[15px] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#F3B544]/20 cursor-pointer"
                 >
-                  <span>View My Work</span>
+                  <span>{hero.primaryCta}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </button>
 
@@ -232,7 +235,7 @@ export default function App() {
                   onClick={() => setContactOpen(true)}
                   className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-3.5 rounded-full border border-stone-600/70 hover:border-[#F3B544]/80 bg-black/40 hover:bg-black/65 backdrop-blur-sm text-neutral-200 hover:text-white font-medium text-sm sm:text-[15px] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                 >
-                  <span>Let's Talk</span>
+                  <span>{hero.secondaryCta}</span>
                   <Mail className="w-4 h-4 text-stone-400 group-hover:text-[#F3B544] transition-colors duration-200" />
                 </button>
               </div>
@@ -252,7 +255,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between text-[11px] sm:text-xs text-stone-500 font-sans-ui">
             <div className="flex items-center space-x-3">
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-500/80 animate-pulse" />
-              <span>Available for select screenwriting commissions & writers' rooms</span>
+              <span>{hero.availabilityNotice}</span>
             </div>
             <button
               onClick={() => {
@@ -261,7 +264,7 @@ export default function App() {
               }}
               className="mt-1 sm:mt-0 flex items-center space-x-2 text-stone-400 hover:text-[#F3B544] transition-colors cursor-pointer group"
             >
-              <span>Scroll to explore about</span>
+              <span>{hero.scrollPrompt}</span>
               <span className="group-hover:translate-y-0.5 transition-transform">↓</span>
             </button>
           </div>

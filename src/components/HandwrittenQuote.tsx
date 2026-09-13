@@ -1,10 +1,17 @@
 import React from 'react';
+import siteContent from '../data/siteContent.json';
 
 interface HandwrittenQuoteProps {
   className?: string;
 }
 
 export const HandwrittenQuote: React.FC<HandwrittenQuoteProps> = ({ className = '' }) => {
+  const w1 = siteContent.hero?.quoteWord1 || 'Great';
+  const w2 = siteContent.hero?.quoteWord2 || 'Stories';
+  const w3 = siteContent.hero?.quoteWord3 || 'Build';
+  const w4 = siteContent.hero?.quoteWord4 || 'Better';
+  const w5 = siteContent.hero?.quoteWord5 || 'Worlds';
+
   return (
     <div
       id="hero-quote-container"
@@ -12,12 +19,12 @@ export const HandwrittenQuote: React.FC<HandwrittenQuoteProps> = ({ className = 
       style={{ textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}
     >
       <div className="flex flex-col leading-[1.08] text-right sm:text-left text-neutral-100/90 text-3xl sm:text-4xl md:text-5xl lg:text-[46px] tracking-wide font-medium italic">
-        <span className="transform -rotate-2 origin-bottom-left transition-transform duration-500">Great</span>
-        <span className="transform -rotate-1 ml-1 sm:ml-2">Stories</span>
-        <span className="transform rotate-1 ml-0.5 sm:ml-1">Build</span>
-        <span className="transform -rotate-1 ml-1 sm:ml-2">Better</span>
+        <span className="transform -rotate-2 origin-bottom-left transition-transform duration-500">{w1}</span>
+        <span className="transform -rotate-1 ml-1 sm:ml-2">{w2}</span>
+        <span className="transform rotate-1 ml-0.5 sm:ml-1">{w3}</span>
+        <span className="transform -rotate-1 ml-1 sm:ml-2">{w4}</span>
         <div className="relative inline-block w-fit self-end sm:self-start">
-          <span className="transform rotate-2 ml-1 sm:ml-2">Worlds</span>
+          <span className="transform rotate-2 ml-1 sm:ml-2">{w5}</span>
           {/* Handwritten artistic underline */}
           <svg
             id="quote-underline-svg"

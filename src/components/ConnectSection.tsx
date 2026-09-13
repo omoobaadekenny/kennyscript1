@@ -1,11 +1,19 @@
 import React from 'react';
 import { Mail, Instagram } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
 
 interface ConnectSectionProps {
   onOpenContact: () => void;
 }
 
 export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact }) => {
+  const content = siteContent.connect;
+  const footerContent = siteContent.footer;
+
+  const linkedinUrl = content.socialLinks?.find((s) => s.id === 'social-linkedin')?.url || 'https://linkedin.com';
+  const xUrl = content.socialLinks?.find((s) => s.id === 'social-x')?.url || 'https://x.com';
+  const instagramUrl = content.socialLinks?.find((s) => s.id === 'social-instagram')?.url || 'https://instagram.com';
+
   return (
     <div id="contact" className="w-full flex flex-col">
       {/* Upper Connect Banner on Linen / Cream Background */}
@@ -22,7 +30,7 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
                 id="connect-eyebrow"
                 className="font-sans-ui text-xs sm:text-[13px] tracking-[0.24em] uppercase font-semibold text-stone-600"
               >
-                LET'S CONNECT
+                {content.eyebrow}
               </span>
             </div>
 
@@ -30,14 +38,14 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
               id="connect-headline"
               className="font-serif-display text-3xl sm:text-4xl lg:text-[42px] font-normal italic leading-[1.14] tracking-[-0.01em] text-[#191613]"
             >
-              Have a Story to Tell?
+              {content.headline}
             </h2>
 
             <p
               id="connect-description"
               className="font-sans-ui text-stone-600 text-xs sm:text-sm md:text-[14.5px] leading-relaxed mt-2.5 font-normal"
             >
-              I'm always open to new ideas, collaborations and exciting projects. Feel free to reach out.
+              {content.description}
             </p>
           </div>
 
@@ -49,7 +57,7 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
               onClick={onOpenContact}
               className="group inline-flex items-center gap-3 px-8 py-3.5 sm:py-4 rounded-full bg-[#0d0f14] hover:bg-[#181b22] text-neutral-100 text-sm sm:text-[15px] font-medium transition-all duration-200 transform hover:scale-[1.03] active:scale-[0.98] shadow-xl cursor-pointer"
             >
-              <span>Get In Touch</span>
+              <span>{content.buttonText}</span>
               <Mail className="w-4 h-4 text-[#F3B544] group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
@@ -60,7 +68,7 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
             <div id="connect-social-links" className="flex items-center space-x-5 text-stone-800">
               {/* LinkedIn */}
               <a
-                href="https://linkedin.com"
+                href={linkedinUrl}
                 target="_blank"
                 rel="noreferrer"
                 id="social-linkedin"
@@ -74,7 +82,7 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
 
               {/* X / Twitter */}
               <a
-                href="https://x.com"
+                href={xUrl}
                 target="_blank"
                 rel="noreferrer"
                 id="social-x"
@@ -88,7 +96,7 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
 
               {/* Instagram */}
               <a
-                href="https://instagram.com"
+                href={instagramUrl}
                 target="_blank"
                 rel="noreferrer"
                 id="social-instagram"
@@ -113,7 +121,7 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
             {/* Handwritten Signature */}
             <div id="connect-signature-container" className="flex flex-col items-center lg:items-end select-none">
               <span className="font-script-quote text-2xl sm:text-3xl text-stone-700/90 font-medium tracking-wide transform -rotate-2">
-                Kehinde David Aderibigbe
+                {content.signatureName}
               </span>
               {/* Handwritten signature underline brush swoosh */}
               <svg
@@ -148,7 +156,7 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
         className="w-full bg-[#080a0d] py-6 sm:py-7 px-6 text-center border-t border-stone-900 select-none"
       >
         <p className="font-sans-ui text-[11px] sm:text-xs tracking-[0.32em] uppercase text-stone-400 font-medium">
-          STORIES <span className="text-stone-600 mx-2 sm:mx-3">/</span> CHARACTERS <span className="text-stone-600 mx-2 sm:mx-3">/</span> IMPACT
+          {footerContent.brandPillars.join(' / ')}
         </p>
       </footer>
     </div>

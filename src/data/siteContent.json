@@ -1,0 +1,381 @@
+{
+  "site": {
+    "siteName": "Kehinde David Aderibigbe Portfolio",
+    "siteTitle": "Kehinde David Aderibigbe | Screenwriter & Storyteller",
+    "siteDescription": "Portfolio for Kehinde David Aderibigbe, screenwriter and storyteller. Features the cinematic hero section, About Me, Screenwriting & Story Development services, Selected Work showcase, Creative Process, and Connect section.",
+    "authorName": "Kehinde David Aderibigbe",
+    "authorRole": "Screenwriter & Storyteller",
+    "brandTitle": "KEHINDE DAVID ADERIBIGBE",
+    "brandSubtitle": "SCREENWRITER | STORYTELLER",
+    "navigation": [
+      { "id": "home", "label": "Home" },
+      { "id": "about", "label": "About" },
+      { "id": "my-work", "label": "My Work" },
+      { "id": "services", "label": "Services" },
+      { "id": "contact", "label": "Contact" }
+    ]
+  },
+  "hero": {
+    "backgroundImage": "/src/assets/images/screenwriter_hero_1789318514729.jpg",
+    "backgroundFallback": "/hero-bg.jpg",
+    "eyebrow": "WELCOME TO MY PORTFOLIO",
+    "headlinePrefix": "I Turn Ideas Into",
+    "headlineMiddle": "Stories Worth",
+    "headlineHighlighted": "Watching.",
+    "description": "I'm Kehinde David Aderibigbe, a screenwriter with a passion for crafting compelling stories, memorable characters, and cinematic experiences that stay with you.",
+    "primaryCta": "View My Work",
+    "secondaryCta": "Let's Talk",
+    "quoteWord1": "Great",
+    "quoteWord2": "Stories",
+    "quoteWord3": "Build",
+    "quoteWord4": "Better",
+    "quoteWord5": "Worlds",
+    "availabilityNotice": "Available for select screenwriting commissions & writers' rooms",
+    "scrollPrompt": "Scroll to explore"
+  },
+  "about": {
+    "image": "/src/assets/images/screenplay_notebook_1789318951251.jpg",
+    "imageFallback": "/screenplay-notebook.jpg",
+    "eyebrow": "ABOUT ME",
+    "headline": "The Story Behind the Writer",
+    "bioLead": "Kehinde David Aderibigbe",
+    "bioText": "I'm Kehinde David Aderibigbe — a screenwriter driven by a deep love for storytelling. I write stories that explore real emotions, complex characters and powerful themes. Whether it's a drama, thriller, or an inspiring tale, I'm always focused on creating stories that connect, entertain, and make an impact.",
+    "pillars": [
+      {
+        "id": "creative-thinker",
+        "titleLine1": "Creative",
+        "titleLine2": "Thinker"
+      },
+      {
+        "id": "story-enthusiast",
+        "titleLine1": "Story",
+        "titleLine2": "Enthusiast"
+      },
+      {
+        "id": "detail-focused",
+        "titleLine1": "Detail",
+        "titleLine2": "Focused"
+      },
+      {
+        "id": "always-growing",
+        "titleLine1": "Always",
+        "titleLine2": "Growing"
+      }
+    ],
+    "modalLead": "Biography & Philosophy",
+    "modalParagraph1": "Kehinde David Aderibigbe is an accomplished screenwriter and visual storyteller dedicated to developing character-driven cinematic narratives that provoke thought, evoke empathy, and linger long after the final credits roll.",
+    "modalParagraph2": "Bridging contemporary global viewpoints with classic theatrical pacing, his writing focuses on rich interpersonal tensions, authentic dialogue, high-stakes moral dilemmas, and atmospheric worldbuilding.",
+    "modalPillarsTitle": "Core Storytelling Pillars",
+    "modalPillars": [
+      {
+        "id": "pillar-authenticity",
+        "title": "Unflinching Character Authenticity",
+        "description": "Multi-layered protagonists with grounded motivations and flaws."
+      },
+      {
+        "id": "pillar-pacing",
+        "title": "Cinematic Visual Pacing",
+        "description": "Scripts crafted to translate seamlessly from the page to the camera lens."
+      },
+      {
+        "id": "pillar-resonance",
+        "title": "Thematic Resonance",
+        "description": "Stories that interrogate culture, humanity, and our relationship with the future."
+      }
+    ],
+    "modalCtaText": "Connect With Kehinde"
+  },
+  "services": {
+    "backgroundImage": "/src/assets/images/film_set_bg_1789319268705.jpg",
+    "backgroundFallback": "/services-bg.jpg",
+    "eyebrow": "WHAT I DO",
+    "headline": "Screenwriting & Story Development",
+    "description": "I work with ideas, turning them into well-structured scripts and compelling screenplays that are ready for the screen.",
+    "buttonText": "View Services",
+    "items": [
+      {
+        "id": "scriptwriting",
+        "title": "Scriptwriting",
+        "description": "Original screenplays for film, TV and web series.",
+        "badge": "Commission / Spec",
+        "details": "Full feature-length screenplays written from original concepts or adapted from source material, delivered with scene-by-scene blueprints."
+      },
+      {
+        "id": "story-development",
+        "title": "Story Development",
+        "description": "Building strong concepts, characters and structure.",
+        "badge": "Episodic",
+        "details": "Comprehensive pilot episodes, episodic outlines, character arcs, and multi-season worldbuilding bibles ready for production studio pitches."
+      },
+      {
+        "id": "screenplay-rewriting",
+        "title": "Screenplay Rewriting",
+        "description": "Polishing scripts for better impact and flow.",
+        "badge": "Polish / Rewrites",
+        "details": "Diagnostic dialogue tune-ups, structure tightening, character voice elevation, and in-depth developmental notes for directors and producers."
+      },
+      {
+        "id": "script-consultation",
+        "title": "Script Consultation",
+        "description": "Feedback, notes and guidance for your projects.",
+        "badge": "Advisory",
+        "details": "Feedback, notes and creative guidance for indie productions, filmmakers, and emerging directors."
+      }
+    ],
+    "modalHeadline": "Screenwriting & Narrative Advisory",
+    "modalCtaText": "Inquire About Availability"
+  },
+  "selectedWork": {
+    "eyebrow": "SELECTED WORK",
+    "headline": "Some of My Scripts",
+    "subtitle": "A look at a few of the projects I've developed and written.",
+    "viewAllText": "View All Projects",
+    "featuredScripts": [
+      {
+        "id": "the-last-horizon",
+        "title": "The Last Horizon",
+        "genre": "Drama",
+        "format": "Feature Film",
+        "image": "/src/assets/images/the_last_horizon_1789319378891.jpg",
+        "fallbackImage": "/the-last-horizon.jpg",
+        "logline": "In a rain-drenched coastal town on the brink of economic collapse, a quiet harbourmaster confronts his estrangement from his daughter while sheltering a fugitive who holds the deed to the city’s last heritage dock.",
+        "pages": "108 pages",
+        "tone": "Contemplative, Poignant, Grounded"
+      },
+      {
+        "id": "echoes-of-tomorrow",
+        "title": "Echoes of Tomorrow",
+        "genre": "Thriller",
+        "format": "Feature Film",
+        "image": "/src/assets/images/echoes_of_tomorrow_1789319395622.jpg",
+        "fallbackImage": "/echoes-of-tomorrow.jpg",
+        "logline": "A forensic audio analyst reconstructing the final voicemails of a missing investigative reporter uncovers an algorithmic syndicate orchestrating high-frequency political assassinations.",
+        "pages": "114 pages",
+        "tone": "Tense, Neo-Noir, High-Stakes"
+      },
+      {
+        "id": "the-next-chapter",
+        "title": "The Next Chapter",
+        "genre": "Drama",
+        "format": "TV Series",
+        "image": "/src/assets/images/the_next_chapter_1789319410271.jpg",
+        "fallbackImage": "/the-next-chapter.jpg",
+        "logline": "Following the sudden death of their family patriarch, three estranged adult siblings return to their ancestral vineyard to divide the estate, only to discover their father led an entirely clandestine double life.",
+        "pages": "60 min pilot & Series Bible",
+        "tone": "Character-Driven, Warm, Emotionally Resonant"
+      },
+      {
+        "id": "beyond-the-gate",
+        "title": "Beyond the Gate",
+        "genre": "Sci-Fi",
+        "format": "Feature Film",
+        "image": "/src/assets/images/beyond_the_gate_1789319423559.jpg",
+        "fallbackImage": "/beyond-the-gate.jpg",
+        "logline": "When a atmospheric barrier sealing off a quarantined megacity sector begins to fail, an unaligned courier must escort an orphaned bio-engineer through forbidden zones to activate the failsafe generator.",
+        "pages": "116 pages",
+        "tone": "Atmospheric, Visionary, Dystopian"
+      }
+    ],
+    "catalogScripts": [
+      {
+        "id": "echoes-of-the-caldera",
+        "title": "Echoes of the Caldera",
+        "genre": "Psychological Thriller / Drama",
+        "format": "Feature Film (112 pages)",
+        "status": "Ready for Packaging",
+        "logline": "When an isolated vulcanologist discovers anomalous harmonic seismic signals beneath an ancient dormant crater, he uncovers a suppressed corporate experiment tied to his late sister’s disappearance.",
+        "accolade": "Nicholl Fellowship Top 10% Semifinalist"
+      },
+      {
+        "id": "the-silent-frequency",
+        "title": "The Silent Frequency",
+        "genre": "Sci-Fi / Neo-Noir",
+        "format": "One-Hour TV Pilot & Series Bible",
+        "status": "In Development",
+        "logline": "In a near-future metropolis where verbal speech is monitored by predictive audio sensors, a rogue telegraphist and an ex-sound engineer transmit encrypted counter-narratives over forgotten analog frequencies.",
+        "accolade": "Austin Film Festival Second Rounder"
+      },
+      {
+        "id": "harvest-of-solitude",
+        "title": "Harvest of Solitude",
+        "genre": "Coming-of-Age Drama",
+        "format": "Feature Film (98 pages)",
+        "status": "Optioned / Pre-production",
+        "logline": "A young botanical archivist in coastal West Africa fights to preserve ancestral agricultural remedies while navigating familial friction and high-stakes pharmaceutical patent battles.",
+        "accolade": "Black List Recommended Script (Score 8/10)"
+      }
+    ]
+  },
+  "creativeProcess": {
+    "backgroundImage": "/src/assets/images/creative_process_bg_1789319539701.jpg",
+    "backgroundFallback": "/process-bg.jpg",
+    "eyebrow": "MY CREATIVE PROCESS",
+    "headline": "From Idea to Final Script",
+    "steps": [
+      {
+        "id": "step-1",
+        "number": "1",
+        "title": "1. Idea",
+        "subtitle": "Finding the right spark."
+      },
+      {
+        "id": "step-2",
+        "number": "2",
+        "title": "2. Development",
+        "subtitle": "Building the story."
+      },
+      {
+        "id": "step-3",
+        "number": "3",
+        "title": "3. Writing",
+        "subtitle": "Bringing it to life."
+      },
+      {
+        "id": "step-4",
+        "number": "4",
+        "title": "4. Refinement",
+        "subtitle": "Polishing for impact."
+      }
+    ]
+  },
+  "connect": {
+    "eyebrow": "LET'S CONNECT",
+    "headline": "Have a Story to Tell?",
+    "description": "I'm always open to new ideas, collaborations and exciting projects. Feel free to reach out.",
+    "buttonText": "Get In Touch",
+    "signatureName": "Kehinde David Aderibigbe",
+    "socialLinks": [
+      {
+        "id": "social-linkedin",
+        "platform": "LinkedIn",
+        "url": "https://linkedin.com"
+      },
+      {
+        "id": "social-x",
+        "platform": "X (Twitter)",
+        "url": "https://x.com"
+      },
+      {
+        "id": "social-instagram",
+        "platform": "Instagram",
+        "url": "https://instagram.com"
+      },
+      {
+        "id": "social-email",
+        "platform": "Email",
+        "email": "kennydaviddesigns@gmail.com"
+      }
+    ],
+    "footerTagline": "STORIES / CHARACTERS / IMPACT"
+  },
+  "contactModal": {
+    "badge": "Screenwriter & Storyteller",
+    "title": "Let's Build a Story",
+    "description": "Available for screenplay commissions, writers' room staffing, script doctoring, and story treatments.",
+    "directEmail": "kennydaviddesigns@gmail.com",
+    "successTitle": "Message Sent",
+    "successMessage": "Thank you for reaching out. Kehinde David Aderibigbe will review your inquiry and get back to you shortly.",
+    "projectTypes": [
+      "Feature Film Screenplay",
+      "Television Pilot / Series Bible",
+      "Script Polish / Doctoring",
+      "Original Concept & Treatment",
+      "General Collaboration / Representation"
+    ]
+  },
+  "contactInfo": {
+    "email": "kennydaviddesigns@gmail.com",
+    "location": "Lagos / Remote Worldwide"
+  },
+  "footer": {
+    "brandPillars": ["STORIES", "CHARACTERS", "IMPACT"],
+    "copyright": "© 2025 Kehinde David Aderibigbe. All Rights Reserved."
+  },
+  "aboutModal": {
+    "badge": "Biography & Philosophy",
+    "title": "Kehinde David Aderibigbe",
+    "paragraphs": [
+      "Kehinde David Aderibigbe is an accomplished screenwriter and visual storyteller dedicated to developing character-driven cinematic narratives that provoke thought, evoke empathy, and linger long after the final credits roll.",
+      "Bridging contemporary global viewpoints with classic theatrical pacing, his writing focuses on rich interpersonal tensions, authentic dialogue, high-stakes moral dilemmas, and atmospheric worldbuilding."
+    ],
+    "pillarsHeading": "Core Storytelling Pillars",
+    "pillars": [
+      {
+        "id": "pillar-authenticity",
+        "title": "Unflinching Character Authenticity",
+        "desc": "Multi-layered protagonists with grounded motivations and flaws."
+      },
+      {
+        "id": "pillar-pacing",
+        "title": "Cinematic Visual Pacing",
+        "desc": "Scripts crafted to translate seamlessly from the page to the camera lens."
+      },
+      {
+        "id": "pillar-resonance",
+        "title": "Thematic Resonance",
+        "desc": "Stories that interrogate culture, humanity, and our relationship with the future."
+      }
+    ],
+    "buttonText": "Connect With Kehinde"
+  },
+  "servicesModal": {
+    "badge": "Creative Services",
+    "title": "Screenwriting & Narrative Advisory",
+    "offerings": [
+      {
+        "id": "modal-service-film",
+        "title": "Feature Film Screenwriting",
+        "tag": "Commission / Spec",
+        "description": "Full feature-length screenplays written from original concepts or adapted from source material, delivered with scene-by-scene blueprints."
+      },
+      {
+        "id": "modal-service-tv",
+        "title": "Television Pilot & Series Bibles",
+        "tag": "Episodic",
+        "description": "Comprehensive pilot episodes, episodic outlines, character arcs, and multi-season worldbuilding bibles ready for production studio pitches."
+      },
+      {
+        "id": "modal-service-doctoring",
+        "title": "Script Doctoring & Coverage Analysis",
+        "tag": "Polish / Rewrites",
+        "description": "Diagnostic dialogue tune-ups, structure tightening, character voice elevation, and in-depth developmental notes for directors and producers."
+      }
+    ],
+    "buttonText": "Inquire About Availability"
+  },
+  "workPreviewModal": {
+    "badge": "Screenwriting Catalog",
+    "title": "Selected Feature & Television Works",
+    "scripts": [
+      {
+        "id": "script-caldera",
+        "title": "Echoes of the Caldera",
+        "genre": "Psychological Thriller / Drama",
+        "format": "Feature Film (112 pages)",
+        "status": "Ready for Packaging",
+        "logline": "When an isolated vulcanologist discovers anomalous harmonic seismic signals beneath an ancient dormant crater, he uncovers a suppressed corporate experiment tied to his late sister's disappearance.",
+        "accolade": "Nicholl Fellowship Top 10% Semifinalist"
+      },
+      {
+        "id": "script-silent-frequency",
+        "title": "The Silent Frequency",
+        "genre": "Sci-Fi / Neo-Noir",
+        "format": "One-Hour TV Pilot & Series Bible",
+        "status": "In Development",
+        "logline": "In a near-future metropolis where verbal speech is monitored by predictive audio sensors, a rogue telegraphist and an ex-sound engineer transmit encrypted counter-narratives over forgotten analog frequencies.",
+        "accolade": "Austin Film Festival Second Rounder"
+      },
+      {
+        "id": "script-harvest",
+        "title": "Harvest of Solitude",
+        "genre": "Coming-of-Age Drama",
+        "format": "Feature Film (98 pages)",
+        "status": "Optioned / Pre-production",
+        "logline": "A young botanical archivist in coastal West Africa fights to preserve ancestral agricultural remedies while navigating familial friction and high-stakes pharmaceutical patent battles.",
+        "accolade": "Black List Recommended Script (Score 8/10)"
+      }
+    ],
+    "note": "Full treatments, script bibles, and lookbooks available upon request.",
+    "requestButtonText": "Request Full Screenplay"
+  }
+}

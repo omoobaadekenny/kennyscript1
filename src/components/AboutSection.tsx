@@ -1,7 +1,44 @@
 import React from 'react';
 import screenplayImg from '../assets/images/screenplay_notebook_1789318951251.jpg';
+import siteContent from '../data/siteContent.json';
 
 export const AboutSection: React.FC = () => {
+  const content = siteContent.about;
+  const imageSrc = content.image || screenplayImg;
+  const imageFallback = content.imageFallback || '/screenplay-notebook.jpg';
+
+  const pillarIcons: Record<string, React.ReactNode> = {
+    'creative-thinker': (
+      <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="7" r="4" />
+        <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+      </svg>
+    ),
+    'story-enthusiast': (
+      <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="2.5" />
+        <circle cx="12" cy="7" r="1" fill="currentColor" />
+        <circle cx="16.5" cy="9.5" r="1" fill="currentColor" />
+        <circle cx="16.5" cy="14.5" r="1" fill="currentColor" />
+        <circle cx="12" cy="17" r="1" fill="currentColor" />
+        <circle cx="7.5" cy="14.5" r="1" fill="currentColor" />
+        <circle cx="7.5" cy="9.5" r="1" fill="currentColor" />
+      </svg>
+    ),
+    'detail-focused': (
+      <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+        <line x1="15" y1="5" x2="19" y2="9" />
+      </svg>
+    ),
+    'always-growing': (
+      <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    ),
+  };
+
   return (
     <section
       id="about"
@@ -44,9 +81,9 @@ export const AboutSection: React.FC = () => {
               >
                 <img
                   id="screenplay-notebook-image"
-                  src={screenplayImg}
+                  src={imageSrc}
                   onError={(e) => {
-                    e.currentTarget.src = '/screenplay-notebook.jpg';
+                    e.currentTarget.src = imageFallback;
                   }}
                   alt="Screenplay notebook, pen, and director's clapperboard on desk"
                   referrerPolicy="no-referrer"
@@ -85,7 +122,7 @@ export const AboutSection: React.FC = () => {
                 id="about-eyebrow"
                 className="font-sans-ui text-xs sm:text-[13px] tracking-[0.24em] uppercase font-semibold text-stone-600"
               >
-                ABOUT ME
+                {content.eyebrow}
               </span>
             </div>
 
@@ -94,8 +131,7 @@ export const AboutSection: React.FC = () => {
               id="about-headline"
               className="font-serif-display text-4xl sm:text-5xl md:text-[52px] xl:text-[56px] font-normal italic leading-[1.12] tracking-[-0.01em] text-[#191613]"
             >
-              The Story Behind <br />
-              the Writer
+              {content.headline}
             </h2>
 
             {/* Body Description */}
@@ -103,11 +139,7 @@ export const AboutSection: React.FC = () => {
               id="about-bio-text"
               className="font-sans-ui text-stone-700 text-sm sm:text-base md:text-[16px] leading-[1.72] max-w-2xl mt-5 sm:mt-6 font-normal"
             >
-              I'm <strong className="font-semibold text-stone-900">Kehinde David Aderibigbe</strong> — a
-              screenwriter driven by a deep love for storytelling. I write stories that
-              explore real emotions, complex characters and powerful themes. Whether
-              it's a drama, thriller, or an inspiring tale, I'm always focused on
-              creating stories that connect, entertain, and make an impact.
+              {content.bioText}
             </p>
 
             {/* 4 Feature Columns with Vertical Dividers */}
@@ -115,83 +147,34 @@ export const AboutSection: React.FC = () => {
               id="about-core-pillars"
               className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0 mt-8 sm:mt-10 pt-4 sm:pt-6 border-t border-stone-300/80 sm:border-t-0"
             >
-              {/* Item 1: Creative Thinker */}
-              <div
-                id="pillar-creative-thinker"
-                className="flex flex-col items-start pr-4 sm:pr-6 sm:border-r sm:border-stone-300"
-              >
-                <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-stone-900 mb-2.5 sm:mb-3">
-                  {/* Clean User Outline Icon matching portfoliome 2.png */}
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="7" r="4" />
-                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
-                  </svg>
-                </div>
-                <div className="font-sans-ui text-xs sm:text-sm font-medium text-stone-900 leading-snug">
-                  <div>Creative</div>
-                  <div>Thinker</div>
-                </div>
-              </div>
-
-              {/* Item 2: Story Enthusiast */}
-              <div
-                id="pillar-story-enthusiast"
-                className="flex flex-col items-start px-0 sm:px-6 sm:border-r sm:border-stone-300"
-              >
-                <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-stone-900 mb-2.5 sm:mb-3">
-                  {/* Film Reel Icon matching portfoliome 2.png */}
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="9" />
-                    <circle cx="12" cy="12" r="2.5" />
-                    <circle cx="12" cy="7" r="1" fill="currentColor" />
-                    <circle cx="16.5" cy="9.5" r="1" fill="currentColor" />
-                    <circle cx="16.5" cy="14.5" r="1" fill="currentColor" />
-                    <circle cx="12" cy="17" r="1" fill="currentColor" />
-                    <circle cx="7.5" cy="14.5" r="1" fill="currentColor" />
-                    <circle cx="7.5" cy="9.5" r="1" fill="currentColor" />
-                  </svg>
-                </div>
-                <div className="font-sans-ui text-xs sm:text-sm font-medium text-stone-900 leading-snug">
-                  <div>Story</div>
-                  <div>Enthusiast</div>
-                </div>
-              </div>
-
-              {/* Item 3: Detail Focused */}
-              <div
-                id="pillar-detail-focused"
-                className="flex flex-col items-start pr-4 sm:px-6 sm:border-r sm:border-stone-300"
-              >
-                <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-stone-900 mb-2.5 sm:mb-3">
-                  {/* Mechanical Pencil Icon matching portfoliome 2.png */}
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-                    <line x1="15" y1="5" x2="19" y2="9" />
-                  </svg>
-                </div>
-                <div className="font-sans-ui text-xs sm:text-sm font-medium text-stone-900 leading-snug">
-                  <div>Detail</div>
-                  <div>Focused</div>
-                </div>
-              </div>
-
-              {/* Item 4: Always Growing */}
-              <div
-                id="pillar-always-growing"
-                className="flex flex-col items-start px-0 sm:pl-6"
-              >
-                <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-stone-900 mb-2.5 sm:mb-3">
-                  {/* Five-point star outline matching portfoliome 2.png */}
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                </div>
-                <div className="font-sans-ui text-xs sm:text-sm font-medium text-stone-900 leading-snug">
-                  <div>Always</div>
-                  <div>Growing</div>
-                </div>
-              </div>
-
+              {content.pillars.map((pillar, idx) => {
+                const isLast = idx === content.pillars.length - 1;
+                const borderClasses = isLast
+                  ? 'px-0 sm:pl-6'
+                  : idx === 0
+                  ? 'pr-4 sm:pr-6 sm:border-r sm:border-stone-300'
+                  : 'px-0 sm:px-6 sm:border-r sm:border-stone-300';
+                
+                return (
+                  <div
+                    key={pillar.id}
+                    id={`pillar-${pillar.id}`}
+                    className={`flex flex-col items-start ${borderClasses}`}
+                  >
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-stone-900 mb-2.5 sm:mb-3">
+                      {pillarIcons[pillar.id] || (
+                        <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="9" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="font-sans-ui text-xs sm:text-sm font-medium text-stone-900 leading-snug">
+                      <div>{pillar.titleLine1}</div>
+                      <div>{pillar.titleLine2}</div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

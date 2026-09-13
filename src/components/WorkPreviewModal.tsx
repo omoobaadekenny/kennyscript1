@@ -1,5 +1,6 @@
 import React from 'react';
-import { X, Film, Award, BookOpen, Clock, ArrowUpRight } from 'lucide-react';
+import { X, Award, Clock, ArrowUpRight } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
 
 interface WorkPreviewModalProps {
   isOpen: boolean;
@@ -7,51 +8,15 @@ interface WorkPreviewModalProps {
   onOpenContact: () => void;
 }
 
-interface ScriptWork {
-  title: string;
-  genre: string;
-  format: string;
-  status: string;
-  logline: string;
-  accolade?: string;
-}
-
-const SAMPLE_SCRIPTS: ScriptWork[] = [
-  {
-    title: 'Echoes of the Caldera',
-    genre: 'Psychological Thriller / Drama',
-    format: 'Feature Film (112 pages)',
-    status: 'Ready for Packaging',
-    logline:
-      'When an isolated vulcanologist discovers anomalous harmonic seismic signals beneath an ancient dormant crater, he uncovers a suppressed corporate experiment tied to his late sister’s disappearance.',
-    accolade: 'Nicholl Fellowship Top 10% Semifinalist',
-  },
-  {
-    title: 'The Silent Frequency',
-    genre: 'Sci-Fi / Neo-Noir',
-    format: 'One-Hour TV Pilot & Series Bible',
-    status: 'In Development',
-    logline:
-      'In a near-future metropolis where verbal speech is monitored by predictive audio sensors, a rogue telegraphist and an ex-sound engineer transmit encrypted counter-narratives over forgotten analog frequencies.',
-    accolade: 'Austin Film Festival Second Rounder',
-  },
-  {
-    title: 'Harvest of Solitude',
-    genre: 'Coming-of-Age Drama',
-    format: 'Feature Film (98 pages)',
-    status: 'Optioned / Pre-production',
-    logline:
-      'A young botanical archivist in coastal West Africa fights to preserve ancestral agricultural remedies while navigating familial friction and high-stakes pharmaceutical patent battles.',
-    accolade: 'Black List Recommended Script (Score 8/10)',
-  },
-];
-
 export const WorkPreviewModal: React.FC<WorkPreviewModalProps> = ({
   isOpen,
   onClose,
   onOpenContact,
 }) => {
   if (!isOpen) return null;
+
+  const content = siteContent.workPreviewModal;
+  const scripts = content.scripts || [];
 
   return (
     <div
@@ -70,11 +35,11 @@ export const WorkPreviewModal: React.FC<WorkPreviewModalProps> = ({
             <div className="flex items-center gap-2 mb-1">
               <span className="w-2 h-2 rounded-full bg-[#F3B544]" />
               <span className="text-xs uppercase tracking-[0.2em] font-medium text-[#F3B544]">
-                Screenwriting Catalog
+                {content.badge}
               </span>
             </div>
             <h2 className="font-serif-display text-2xl sm:text-3xl font-semibold">
-              Selected Feature & Television Works
+              {content.title}
             </h2>
           </div>
           <button
@@ -89,10 +54,10 @@ export const WorkPreviewModal: React.FC<WorkPreviewModalProps> = ({
 
         {/* Script Cards List */}
         <div className="overflow-y-auto py-4 space-y-4 pr-1 scrollbar-thin">
-          {SAMPLE_SCRIPTS.map((script, idx) => (
+          {scripts.map((script, idx) => (
             <div
-              key={idx}
-              id={`script-item-${idx}`}
+              key={script.id || idx}
+              id={`script-item-${script.id || idx}`}
               className="p-4 sm:p-5 rounded-xl bg-[#17191f] border border-stone-800 hover:border-stone-700 transition-all group"
             >
               <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
@@ -130,7 +95,7 @@ export const WorkPreviewModal: React.FC<WorkPreviewModalProps> = ({
         {/* Footer actions */}
         <div className="pt-4 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-stone-400">
-            Full treatments, script bibles, and lookbooks available upon request.
+            {content.note}
           </p>
           <button
             id="modal-request-script-btn"
@@ -140,7 +105,7 @@ export const WorkPreviewModal: React.FC<WorkPreviewModalProps> = ({
             }}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-[#F3B544] text-[#120E0A] font-semibold text-sm rounded-full hover:bg-[#ffc355] transition-all cursor-pointer"
           >
-            <span>Request Full Screenplay</span>
+            <span>{content.requestButtonText}</span>
             <ArrowUpRight className="w-4 h-4" />
           </button>
         </div>

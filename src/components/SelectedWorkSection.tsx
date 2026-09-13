@@ -4,6 +4,7 @@ import imgLastHorizon from '../assets/images/the_last_horizon_1789319378891.jpg'
 import imgEchoesTomorrow from '../assets/images/echoes_of_tomorrow_1789319395622.jpg';
 import imgNextChapter from '../assets/images/the_next_chapter_1789319410271.jpg';
 import imgBeyondGate from '../assets/images/beyond_the_gate_1789319423559.jpg';
+import siteContent from '../data/siteContent.json';
 
 interface SelectedWorkSectionProps {
   onViewAllProjects?: () => void;
@@ -22,62 +23,26 @@ export interface ScriptItem {
   tone?: string;
 }
 
-export const SELECTED_SCRIPTS: ScriptItem[] = [
-  {
-    id: 'the-last-horizon',
-    title: 'The Last Horizon',
-    genre: 'Drama',
-    format: 'Feature Film',
-    image: imgLastHorizon,
-    fallbackImage: '/the-last-horizon.jpg',
-    logline:
-      'In a rain-drenched coastal town on the brink of economic collapse, a quiet harbourmaster confronts his estrangement from his daughter while sheltering a fugitive who holds the deed to the city’s last heritage dock.',
-    pages: '108 pages',
-    tone: 'Contemplative, Poignant, Grounded',
-  },
-  {
-    id: 'echoes-of-tomorrow',
-    title: 'Echoes of Tomorrow',
-    genre: 'Thriller',
-    format: 'Feature Film',
-    image: imgEchoesTomorrow,
-    fallbackImage: '/echoes-of-tomorrow.jpg',
-    logline:
-      'A forensic audio analyst reconstructing the final voicemails of a missing investigative reporter uncovers an algorithmic syndicate orchestrating high-frequency political assassinations.',
-    pages: '114 pages',
-    tone: 'Tense, Neo-Noir, High-Stakes',
-  },
-  {
-    id: 'the-next-chapter',
-    title: 'The Next Chapter',
-    genre: 'Drama',
-    format: 'TV Series',
-    image: imgNextChapter,
-    fallbackImage: '/the-next-chapter.jpg',
-    logline:
-      'Following the sudden death of their family patriarch, three estranged adult siblings return to their ancestral vineyard to divide the estate, only to discover their father led an entirely clandestine double life.',
-    pages: '60 min pilot & Series Bible',
-    tone: 'Character-Driven, Warm, Emotionally Resonant',
-  },
-  {
-    id: 'beyond-the-gate',
-    title: 'Beyond the Gate',
-    genre: 'Sci-Fi',
-    format: 'Feature Film',
-    image: imgBeyondGate,
-    fallbackImage: '/beyond-the-gate.jpg',
-    logline:
-      'When a atmospheric barrier sealing off a quarantined megacity sector begins to fail, an unaligned courier must escort an orphaned bio-engineer through forbidden zones to activate the failsafe generator.',
-    pages: '116 pages',
-    tone: 'Atmospheric, Visionary, Dystopian',
-  },
-];
+const localFallbackImages: Record<string, string> = {
+  'the-last-horizon': imgLastHorizon,
+  'echoes-of-tomorrow': imgEchoesTomorrow,
+  'the-next-chapter': imgNextChapter,
+  'beyond-the-gate': imgBeyondGate,
+};
+
+export const SELECTED_SCRIPTS: ScriptItem[] = (
+  siteContent.selectedWork?.featuredScripts || []
+).map((s) => ({
+  ...s,
+  image: s.image || localFallbackImages[s.id] || s.fallbackImage,
+}));
 
 export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({
   onViewAllProjects,
   onRequestScript,
 }) => {
   const [selectedScript, setSelectedScript] = useState<ScriptItem | null>(null);
+  const content = siteContent.selectedWork;
 
   return (
     <section
@@ -94,7 +59,7 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({
                 id="selected-work-eyebrow"
                 className="font-sans-ui text-xs sm:text-[13px] tracking-[0.24em] uppercase font-semibold text-stone-600"
               >
-                SELECTED WORK
+                {content.eyebrow}
               </span>
             </div>
 
@@ -103,7 +68,7 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({
               id="selected-work-headline"
               className="font-serif-display text-4xl sm:text-5xl lg:text-[52px] font-normal italic leading-[1.12] tracking-[-0.01em] text-[#191613]"
             >
-              Some of My Scripts
+              {content.headline}
             </h2>
 
             {/* Subtitle */}
@@ -111,7 +76,7 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({
               id="selected-work-subtitle"
               className="font-sans-ui text-stone-600 text-sm sm:text-base mt-3 font-normal"
             >
-              A look at a few of the projects I've developed and written.
+              {content.subtitle}
             </p>
           </div>
 
@@ -123,7 +88,7 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({
               onClick={onViewAllProjects}
               className="group inline-flex items-center gap-2 text-sm sm:text-[15px] font-medium text-stone-900 hover:text-[#c48d28] transition-colors cursor-pointer"
             >
-              <span>View All Projects</span>
+              <span>{content.viewAllText}</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
           </div>

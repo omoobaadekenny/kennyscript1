@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Mail, Send, CheckCircle2, Phone, MapPin } from 'lucide-react';
+import siteContent from '../data/siteContent.json';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -7,6 +8,9 @@ interface ContactModalProps {
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
+  const content = siteContent.contactModal;
+  const directEmail = siteContent.contactInfo?.email || 'kennydaviddesigns@gmail.com';
+
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -52,9 +56,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
         {submitted ? (
           <div className="py-8 text-center flex flex-col items-center">
             <CheckCircle2 className="w-14 h-14 text-[#F3B544] mb-4" />
-            <h3 className="font-serif-display text-2xl font-semibold mb-2">Message Sent</h3>
+            <h3 className="font-serif-display text-2xl font-semibold mb-2">{content.successTitle}</h3>
             <p className="text-stone-300 text-sm max-w-sm mb-6">
-              Thank you for reaching out. Kehinde David Aderibigbe will review your inquiry and get back to you shortly.
+              {content.successMessage}
             </p>
             <button
               id="close-success-btn"
@@ -71,13 +75,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           <div>
             <div className="mb-6">
               <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-[#F3B544]">
-                Screenwriter & Storyteller
+                {content.badge}
               </span>
               <h2 className="font-serif-display text-2xl sm:text-3xl font-semibold mt-1">
-                Let's Build a Story
+                {content.title}
               </h2>
               <p className="text-stone-300 text-sm mt-1.5 leading-relaxed">
-                Available for screenplay commissions, writers' room staffing, script doctoring, and story treatments.
+                {content.description}
               </p>
             </div>
 
@@ -122,11 +126,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                   className="w-full bg-[#181a20] border border-stone-700 rounded-lg px-3.5 py-2.5 text-sm text-neutral-100 focus:outline-none focus:border-[#F3B544] transition-colors"
                 >
-                  <option value="Feature Film">Feature Film Screenplay</option>
-                  <option value="TV Pilot">Television Pilot / Series Bible</option>
-                  <option value="Script Polish">Script Polish / Doctoring</option>
-                  <option value="Story Treatment">Original Concept & Treatment</option>
-                  <option value="General Inquiry">General Collaboration / Representation</option>
+                  {(content.projectTypes || [
+                    "Feature Film",
+                    "TV Pilot",
+                    "Script Polish",
+                    "Story Treatment",
+                    "General Inquiry"
+                  ]).map((type) => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
                 </select>
               </div>
 
@@ -148,7 +156,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
               <div className="pt-2 flex items-center justify-between">
                 <span className="text-[12px] text-stone-400 flex items-center gap-1.5">
                   <Mail className="w-3.5 h-3.5 text-[#F3B544]" />
-                  Direct: kennydaviddesigns@gmail.com
+                  Direct: {directEmail}
                 </span>
                 <button
                   id="submit-contact-btn"

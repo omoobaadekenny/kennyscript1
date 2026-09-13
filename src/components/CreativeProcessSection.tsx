@@ -1,107 +1,99 @@
 import React from 'react';
 import processBgImage from '../assets/images/creative_process_bg_1789319539701.jpg';
-
-interface ProcessStep {
-  number: string;
-  title: string;
-  subtitle: string;
-  icon: React.ReactNode;
-}
+import siteContent from '../data/siteContent.json';
 
 export const CreativeProcessSection: React.FC = () => {
-  const steps: ProcessStep[] = [
-    {
-      number: '1',
-      title: '1. Idea',
-      subtitle: 'Finding the right spark.',
-      icon: (
-        // Lightbulb line art icon
-        <svg
-          className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M9 18h6" />
-          <path d="M10 22h4" />
-          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5" />
-          <line x1="12" y1="2" x2="12" y2="3" />
-          <line x1="4.93" y1="4.93" x2="5.64" y2="5.64" />
-          <line x1="19.07" y1="4.93" x2="18.36" y2="5.64" />
-        </svg>
-      ),
-    },
-    {
-      number: '2',
-      title: '2. Development',
-      subtitle: 'Building the story.',
-      icon: (
-        // Document / Script page icon
-        <svg
-          className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-          <polyline points="14 2 14 8 20 8" />
-          <line x1="8" y1="13" x2="16" y2="13" />
-          <line x1="8" y1="17" x2="16" y2="17" />
-          <line x1="8" y1="9" x2="10" y2="9" />
-        </svg>
-      ),
-    },
-    {
-      number: '3',
-      title: '3. Writing',
-      subtitle: 'Bringing it to life.',
-      icon: (
-        // Pen / Nib angled down
-        <svg
-          className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="m12 19 7-7 3 3-7 7-3-3z" />
-          <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18" />
-          <path d="m2 2 7.586 7.586" />
-          <circle cx="11" cy="11" r="2" />
-        </svg>
-      ),
-    },
-    {
-      number: '4',
-      title: '4. Refinement',
-      subtitle: 'Polishing for impact.',
-      icon: (
-        // Movie clapperboard icon
-        <svg
-          className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M20.2 6 3 11l-.9-2.4c-.4-1.1.2-2.4 1.3-2.8l13.6-5c1.1-.4 2.4.2 2.8 1.3l.4 1.9Z" />
-          <path d="m6.2 5.3 3.1 4.7" />
-          <path d="m12.2 3.1 3.1 4.7" />
-          <rect x="2" y="11" width="20" height="11" rx="2" />
-        </svg>
-      ),
-    },
-  ];
+  const content = siteContent.creativeProcess;
+  const bgImage = content.backgroundImage || processBgImage;
+  const bgFallback = content.backgroundFallback || '/process-bg.jpg';
+
+  const stepIcons: Record<string, React.ReactNode> = {
+    '1': (
+      // Lightbulb line art icon
+      <svg
+        className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9 18h6" />
+        <path d="M10 22h4" />
+        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5" />
+        <line x1="12" y1="2" x2="12" y2="3" />
+        <line x1="4.93" y1="4.93" x2="5.64" y2="5.64" />
+        <line x1="19.07" y1="4.93" x2="18.36" y2="5.64" />
+      </svg>
+    ),
+    '2': (
+      // Document / Script page icon
+      <svg
+        className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="8" y1="13" x2="16" y2="13" />
+        <line x1="8" y1="17" x2="16" y2="17" />
+        <line x1="8" y1="9" x2="10" y2="9" />
+      </svg>
+    ),
+    '3': (
+      // Pen / Nib angled down
+      <svg
+        className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m12 19 7-7 3 3-7 7-3-3z" />
+        <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18" />
+        <path d="m2 2 7.586 7.586" />
+        <circle cx="11" cy="11" r="2" />
+      </svg>
+    ),
+    '4': (
+      // Movie clapperboard icon
+      <svg
+        className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20.2 6 3 11l-.9-2.4c-.4-1.1.2-2.4 1.3-2.8l13.6-5c1.1-.4 2.4.2 2.8 1.3l.4 1.9Z" />
+        <path d="m6.2 5.3 3.1 4.7" />
+        <path d="m12.2 3.1 3.1 4.7" />
+        <rect x="2" y="11" width="20" height="11" rx="2" />
+      </svg>
+    ),
+  };
+
+  const defaultIcon = (
+    <svg
+      className="w-7 h-7 sm:w-8 sm:h-8 text-[#F3B544]"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="9" />
+    </svg>
+  );
 
   return (
     <section
@@ -112,9 +104,9 @@ export const CreativeProcessSection: React.FC = () => {
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
           id="process-bg-image"
-          src={processBgImage}
+          src={bgImage}
           onError={(e) => {
-            e.currentTarget.src = '/process-bg.jpg';
+            e.currentTarget.src = bgFallback;
           }}
           alt="Cinematic mountain landscape with vintage film reel"
           referrerPolicy="no-referrer"
@@ -144,7 +136,7 @@ export const CreativeProcessSection: React.FC = () => {
               id="process-eyebrow"
               className="font-sans-ui text-xs sm:text-[13px] tracking-[0.24em] uppercase font-semibold text-stone-400"
             >
-              MY CREATIVE PROCESS
+              {content.eyebrow}
             </span>
           </div>
 
@@ -153,7 +145,7 @@ export const CreativeProcessSection: React.FC = () => {
             id="process-headline"
             className="font-serif-display text-3xl sm:text-4xl lg:text-[44px] font-normal italic leading-[1.12] tracking-[-0.01em] text-neutral-100"
           >
-            From Idea to Final Script
+            {content.headline}
           </h2>
         </div>
 
@@ -162,9 +154,9 @@ export const CreativeProcessSection: React.FC = () => {
           id="process-steps-container"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 items-start"
         >
-          {steps.map((step, index) => (
+          {content.steps.map((step, index) => (
             <div
-              key={step.number}
+              key={step.id || step.number}
               id={`process-step-${step.number}`}
               className="relative flex items-start group"
             >
@@ -175,7 +167,7 @@ export const CreativeProcessSection: React.FC = () => {
                   id={`process-icon-${step.number}`}
                   className="mb-4 text-[#F3B544] transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-0.5"
                 >
-                  {step.icon}
+                  {stepIcons[step.number] || defaultIcon}
                 </div>
 
                 {/* Title */}
@@ -196,7 +188,7 @@ export const CreativeProcessSection: React.FC = () => {
               </div>
 
               {/* Connecting Golden Arrow (shown between steps on desktop) */}
-              {index < steps.length - 1 && (
+              {index < content.steps.length - 1 && (
                 <div
                   id={`process-arrow-${index + 1}`}
                   className="hidden lg:flex absolute right-0 top-10 text-[#F3B544]/70 transform translate-x-1/2 pointer-events-none"
