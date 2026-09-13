@@ -8,15 +8,30 @@
     "brandTitle": "KEHINDE DAVID ADERIBIGBE",
     "brandSubtitle": "SCREENWRITER | STORYTELLER",
     "navigation": [
-      { "id": "home", "label": "Home" },
-      { "id": "about", "label": "About" },
-      { "id": "my-work", "label": "My Work" },
-      { "id": "services", "label": "Services" },
-      { "id": "contact", "label": "Contact" }
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "about",
+        "label": "About"
+      },
+      {
+        "id": "my-work",
+        "label": "My Work"
+      },
+      {
+        "id": "services",
+        "label": "Services"
+      },
+      {
+        "id": "contact",
+        "label": "Contact"
+      }
     ]
   },
   "hero": {
-    "backgroundImage": "/src/assets/images/screenwriter_hero_1789318514729.jpg",
+    "backgroundImage": "/uploads/covers/my-portrait-zeal-1789329678555-l4gn28.webp",
     "backgroundFallback": "/hero-bg.jpg",
     "eyebrow": "WELCOME TO MY PORTFOLIO",
     "headlinePrefix": "I Turn Ideas Into",
@@ -288,7 +303,11 @@
     "location": "Lagos / Remote Worldwide"
   },
   "footer": {
-    "brandPillars": ["STORIES", "CHARACTERS", "IMPACT"],
+    "brandPillars": [
+      "STORIES",
+      "CHARACTERS",
+      "IMPACT"
+    ],
     "copyright": "© 2025 Kehinde David Aderibigbe. All Rights Reserved."
   },
   "aboutModal": {
