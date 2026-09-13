@@ -1,7 +1,8 @@
 {
   "version": 1,
-  "siteName": "Kehinde David Aderibigbe Portfolio",
+  "siteName": "Writer David Portfolio",
+  "vercelUrl": "https://writerdavidka.vercel.app",
+  "connected": true,
   "contentPath": "src/data/siteContent.json",
-  "schemaPath": "src/data/adminSchema.json",
-  "connected": false
+  "schemaPath": "src/data/adminSchema.json"
 }
