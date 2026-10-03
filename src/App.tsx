@@ -4,10 +4,11 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail, Calendar } from 'lucide-react';
 import { Navbar } from './components/Navbar';
 import { HandwrittenQuote } from './components/HandwrittenQuote';
 import { ContactModal } from './components/ContactModal';
+import { BookingModal } from './components/BookingModal';
 import { WorkPreviewModal } from './components/WorkPreviewModal';
 import { InfoModal } from './components/InfoModal';
 import { AboutSection } from './components/AboutSection';
@@ -21,8 +22,10 @@ import siteContent from './data/siteContent.json';
 export default function App() {
   const [activeNav, setActiveNav] = useState('Home');
   const [contactOpen, setContactOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const [workOpen, setWorkOpen] = useState(false);
   const [infoType, setInfoType] = useState<'About' | 'Services' | null>(null);
+  const [isPortrait, setIsPortrait] = useState(true);
 
   const hero = siteContent.hero;
   const bgImage = hero.backgroundImage || heroBgImage;
@@ -119,41 +122,63 @@ export default function App() {
           <img
             id="hero-background-image"
             src={bgImage}
+            onLoad={(e) => {
+              const { naturalWidth, naturalHeight } = e.currentTarget;
+              setIsPortrait(naturalHeight > naturalWidth);
+            }}
             onError={(e) => {
               e.currentTarget.src = bgFallback;
             }}
-            alt="Kehinde David Aderibigbe at study desk"
+            alt={hero.headlineHighlighted || 'Kehinde David Aderibigbe'}
             referrerPolicy="no-referrer"
-            className="w-full h-full object-cover object-[62%_center] sm:object-[60%_center] md:object-center filter brightness-[0.92] contrast-[1.05]"
+            className={`w-full h-full filter brightness-[0.96] contrast-[1.03] transition-all duration-300 ${
+              isPortrait
+                ? 'object-contain object-center md:object-right lg:object-[84%_center]'
+                : 'object-cover object-center'
+            }`}
           />
 
-          {/* Deep Left Vignette Gradient: Solid on the left for pristine typography legibility */}
+          {/* Deep Left Vignette Gradient: Solid on the left for pristine typography legibility, smooth feathering across */}
           <div
             id="hero-left-vignette"
-            className="absolute inset-0 bg-gradient-to-r from-[#090b0e] via-[#090b0e]/90 md:via-[#090b0e]/75 sm:w-4/5 md:w-3/5 lg:w-[58%] w-full"
+            className={`absolute inset-0 w-full transition-opacity duration-300 ${
+              isPortrait
+                ? 'bg-gradient-to-t from-[#090b0e] via-[#090b0e]/90 to-[#090b0e]/30 md:bg-gradient-to-r md:from-[#090b0e] md:via-[#090b0e] md:via-30% lg:via-[#090b0e]/85 lg:via-48% md:to-transparent'
+                : 'bg-gradient-to-r from-[#090b0e] via-[#090b0e]/90 md:via-[#090b0e]/75 sm:w-4/5 md:w-3/5 lg:w-[58%]'
+            }`}
           />
 
-          {/* Top Header Dark Fade */}
+          {/* Top Header Subtle Fade for Navbar Legibility without obscuring top of portrait */}
           <div
             id="hero-top-vignette"
-            className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#090b0e]/95 via-[#090b0e]/60 to-transparent"
+            className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-[#090b0e]/80 via-[#090b0e]/30 to-transparent"
           />
 
           {/* Bottom Subtle Grounding Vignette */}
           <div
             id="hero-bottom-vignette"
-            className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#090b0e] via-[#090b0e]/40 to-transparent"
+            className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#090b0e] via-[#090b0e]/45 to-transparent"
           />
 
-          {/* Warm Golden Ambient Glow near the vintage study lamp */}
+          {/* Right Edge Subtle Vignette for Portrait Soft Blending */}
+          <div
+            id="hero-right-vignette"
+            className="hidden md:block absolute top-0 right-0 bottom-0 w-20 bg-gradient-to-l from-[#090b0e]/60 to-transparent"
+          />
+
+          {/* Warm Golden Ambient Glow near the portrait */}
           <div
             id="hero-ambient-lamp-glow"
-            className="absolute top-1/6 right-1/4 w-96 h-96 rounded-full bg-[#f5b544]/8 blur-[120px] mix-blend-screen"
+            className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-[#f5b544]/6 blur-[130px] mix-blend-screen"
           />
         </div>
 
         {/* Top Navigation Bar */}
-        <Navbar activeNav={activeNav} onNavClick={handleNavClick} />
+        <Navbar
+          activeNav={activeNav}
+          onNavClick={handleNavClick}
+          onScheduleClick={() => setBookingOpen(true)}
+        />
 
         {/* Hero Section Center Body */}
         <div className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-6 sm:px-10 md:px-14 lg:px-16 flex items-center">
@@ -215,35 +240,46 @@ export default function App() {
               {/* Call To Action Buttons */}
               <div
                 id="hero-cta-buttons"
-                className="flex flex-wrap items-center gap-4 sm:gap-5 mt-7 sm:mt-9"
+                className="flex flex-wrap items-center gap-3.5 sm:gap-4 mt-7 sm:mt-9"
               >
-                {/* Primary CTA: View My Work */}
+                {/* Primary CTA: Schedule a Call */}
+                <button
+                  id="cta-schedule-call-btn"
+                  type="button"
+                  onClick={() => setBookingOpen(true)}
+                  className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 rounded-full bg-[#F3B544] hover:bg-[#ffbe4d] text-[#14110E] font-semibold text-sm sm:text-[15px] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#F3B544]/25 cursor-pointer"
+                >
+                  <Calendar className="w-4 h-4 text-[#14110E]" />
+                  <span>Schedule a Call</span>
+                </button>
+
+                {/* Secondary CTA: View My Work */}
                 <button
                   id="cta-view-work-btn"
                   type="button"
                   onClick={() => setWorkOpen(true)}
-                  className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-3.5 rounded-full bg-[#F3B544] hover:bg-[#ffbe4d] text-[#14110E] font-semibold text-sm sm:text-[15px] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#F3B544]/20 cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-full border border-stone-600/70 hover:border-[#F3B544]/80 bg-black/40 hover:bg-black/65 backdrop-blur-sm text-neutral-200 hover:text-white font-medium text-sm sm:text-[15px] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                 >
                   <span>{hero.primaryCta}</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </button>
 
-                {/* Secondary CTA: Let's Talk */}
+                {/* Tertiary CTA: Let's Talk */}
                 <button
                   id="cta-lets-talk-btn"
                   type="button"
                   onClick={() => setContactOpen(true)}
-                  className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3.5 sm:py-3.5 rounded-full border border-stone-600/70 hover:border-[#F3B544]/80 bg-black/40 hover:bg-black/65 backdrop-blur-sm text-neutral-200 hover:text-white font-medium text-sm sm:text-[15px] transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3.5 rounded-full border border-transparent hover:border-stone-700/60 bg-transparent hover:bg-white/5 text-stone-300 hover:text-white font-medium text-sm sm:text-[15px] transition-all duration-200 cursor-pointer"
                 >
-                  <span>{hero.secondaryCta}</span>
                   <Mail className="w-4 h-4 text-stone-400 group-hover:text-[#F3B544] transition-colors duration-200" />
+                  <span>{hero.secondaryCta}</span>
                 </button>
               </div>
             </div>
 
             {/* Right Column: Handwritten Artistic Quote "Great Stories Build Better Worlds" */}
-            <div className="lg:col-span-5 xl:col-span-4 flex justify-end lg:justify-center items-start lg:pt-0 pointer-events-none">
-              <div className="hidden md:block lg:translate-x-4 lg:-translate-y-8">
+            <div className="lg:col-span-5 xl:col-span-4 flex justify-end items-start lg:pt-0 pointer-events-none">
+              <div className="hidden md:block lg:translate-x-2 xl:translate-x-6 lg:-translate-y-4">
                 <HandwrittenQuote />
               </div>
             </div>
@@ -290,12 +326,21 @@ export default function App() {
       <CreativeProcessSection />
 
       {/* Let's Connect / Have a Story to Tell Section from uploaded design */}
-      <ConnectSection onOpenContact={() => setContactOpen(true)} />
+      <ConnectSection
+        onOpenContact={() => setContactOpen(true)}
+        onOpenBooking={() => setBookingOpen(true)}
+      />
 
       {/* Modals for Interactivity */}
       <ContactModal
         isOpen={contactOpen}
         onClose={() => setContactOpen(false)}
+        onOpenBooking={() => setBookingOpen(true)}
+      />
+
+      <BookingModal
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
       />
 
       <WorkPreviewModal

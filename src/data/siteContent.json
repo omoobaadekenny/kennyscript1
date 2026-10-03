@@ -258,6 +258,7 @@
     "headline": "Have a Story to Tell?",
     "description": "I'm always open to new ideas, collaborations and exciting projects. Feel free to reach out.",
     "buttonText": "Get In Touch",
+    "scheduleButtonText": "Schedule a Call",
     "signatureName": "Kehinde David Aderibigbe",
     "socialLinks": [
       {
@@ -396,5 +397,13 @@
     ],
     "note": "Full treatments, script bibles, and lookbooks available upon request.",
     "requestButtonText": "Request Full Screenplay"
+  },
+  "booking": {
+    "bookingUrl": "https://api.leadconnectorhq.com/widget/booking/Ycvgdlju6M3707KQbc8C",
+    "buttonText": "Schedule a Call",
+    "badge": "Automated Booking",
+    "title": "Schedule a Discovery Call",
+    "subtitle": "Select a date and time on my calendar for a 1-on-1 discovery consultation about your project.",
+    "ctaNote": "Direct calendar integration via GoHighLevel"
   }
 }

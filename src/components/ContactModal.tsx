@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { X, Mail, Send, CheckCircle2, Phone, MapPin } from 'lucide-react';
+import { X, Mail, Send, CheckCircle2, Calendar } from 'lucide-react';
 import siteContent from '../data/siteContent.json';
 
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenBooking?: () => void;
 }
 
-export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
+export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onOpenBooking }) => {
   const content = siteContent.contactModal;
   const directEmail = siteContent.contactInfo?.email || 'kennydaviddesigns@gmail.com';
 
@@ -15,7 +16,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    projectType: 'Feature Film',
+    projectType: 'Feature Film Screenplay',
     message: '',
   });
 
@@ -27,6 +28,19 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
     setTimeout(() => {
       // Allow user to see confirmation
     }, 400);
+  };
+
+  const handleBookingClick = () => {
+    onClose();
+    if (onOpenBooking) {
+      onOpenBooking();
+    } else {
+      window.open(
+        siteContent.booking?.bookingUrl || 'https://api.leadconnectorhq.com/widget/booking/Ycvgdlju6M3707KQbc8C',
+        '_blank',
+        'noopener,noreferrer'
+      );
+    }
   };
 
   return (
@@ -73,7 +87,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           </div>
         ) : (
           <div>
-            <div className="mb-6">
+            <div className="mb-5">
               <span className="text-[11px] tracking-[0.2em] uppercase font-semibold text-[#F3B544]">
                 {content.badge}
               </span>
@@ -83,6 +97,40 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
               <p className="text-stone-300 text-sm mt-1.5 leading-relaxed">
                 {content.description}
               </p>
+            </div>
+
+            {/* Quick Schedule Call Option */}
+            <div
+              id="contact-modal-booking-prompt"
+              className="mb-5 p-3.5 rounded-xl bg-gradient-to-r from-[#F3B544]/15 via-[#F3B544]/5 to-transparent border border-[#F3B544]/35 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[#F3B544]/20 flex items-center justify-center text-[#F3B544] shrink-0">
+                  <Calendar className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-neutral-100">
+                    Prefer a direct discussion?
+                  </p>
+                  <p className="text-[11px] text-stone-400">
+                    Schedule a 1-on-1 discovery call directly on my calendar.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                id="contact-modal-schedule-btn"
+                onClick={handleBookingClick}
+                className="w-full sm:w-auto px-3.5 py-1.5 rounded-full bg-[#F3B544] hover:bg-[#ffbe4d] text-[#14110E] text-xs font-semibold tracking-wide transition-all shrink-0 cursor-pointer shadow-sm"
+              >
+                Schedule Call
+              </button>
+            </div>
+
+            <div className="relative flex py-2 items-center mb-1">
+              <div className="flex-grow border-t border-stone-800"></div>
+              <span className="flex-shrink mx-3 text-[11px] uppercase tracking-wider text-stone-500 font-medium">Or Send a Written Inquiry</span>
+              <div className="flex-grow border-t border-stone-800"></div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">

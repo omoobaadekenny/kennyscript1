@@ -1,14 +1,29 @@
 import React from 'react';
-import { Mail, Instagram } from 'lucide-react';
+import { Mail, Instagram, Calendar } from 'lucide-react';
 import siteContent from '../data/siteContent.json';
 
 interface ConnectSectionProps {
   onOpenContact: () => void;
+  onOpenBooking?: () => void;
 }
 
-export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact }) => {
+export const ConnectSection: React.FC<ConnectSectionProps> = ({
+  onOpenContact,
+  onOpenBooking,
+}) => {
   const content = siteContent.connect;
   const footerContent = siteContent.footer;
+  const bookingUrl =
+    siteContent.booking?.bookingUrl ||
+    'https://api.leadconnectorhq.com/widget/booking/Ycvgdlju6M3707KQbc8C';
+
+  const handleBooking = () => {
+    if (onOpenBooking) {
+      onOpenBooking();
+    } else {
+      window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   const linkedinUrl = content.socialLinks?.find((s) => s.id === 'social-linkedin')?.url || 'https://linkedin.com';
   const xUrl = content.socialLinks?.find((s) => s.id === 'social-x')?.url || 'https://x.com';
@@ -49,13 +64,25 @@ export const ConnectSection: React.FC<ConnectSectionProps> = ({ onOpenContact })
             </p>
           </div>
 
-          {/* Center Column: Get In Touch Dark Pill Button */}
-          <div className="flex items-center justify-center my-2 lg:my-0">
+          {/* Center Column: CTA Buttons (Schedule a Call & Get In Touch) */}
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-center justify-center gap-3.5 my-2 lg:my-0">
+            {/* Primary Action: Schedule a Call */}
+            <button
+              id="connect-schedule-call-btn"
+              type="button"
+              onClick={handleBooking}
+              className="group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:py-4 rounded-full bg-[#d69622] hover:bg-[#c28416] text-[#14110E] text-sm sm:text-[15px] font-semibold transition-all duration-200 transform hover:scale-[1.03] active:scale-[0.98] shadow-lg shadow-[#d69622]/25 cursor-pointer"
+            >
+              <Calendar className="w-4 h-4 text-[#14110E]" />
+              <span>{content.scheduleButtonText || 'Schedule a Call'}</span>
+            </button>
+
+            {/* Secondary Action: Send a Message */}
             <button
               id="get-in-touch-btn"
               type="button"
               onClick={onOpenContact}
-              className="group inline-flex items-center gap-3 px-8 py-3.5 sm:py-4 rounded-full bg-[#0d0f14] hover:bg-[#181b22] text-neutral-100 text-sm sm:text-[15px] font-medium transition-all duration-200 transform hover:scale-[1.03] active:scale-[0.98] shadow-xl cursor-pointer"
+              className="group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 sm:py-4 rounded-full bg-[#0d0f14] hover:bg-[#181b22] text-neutral-100 text-sm sm:text-[15px] font-medium transition-all duration-200 transform hover:scale-[1.03] active:scale-[0.98] shadow-xl cursor-pointer border border-stone-800"
             >
               <span>{content.buttonText}</span>
               <Mail className="w-4 h-4 text-[#F3B544] group-hover:translate-x-0.5 transition-transform" />

@@ -64,6 +64,11 @@
       "label": "Hero Section",
       "fields": [
         {
+          "key": "portraitImage",
+          "label": "Portrait Image (Circle Frame)",
+          "type": "image"
+        },
+        {
           "key": "backgroundImage",
           "label": "Hero Background Image",
           "type": "image"
