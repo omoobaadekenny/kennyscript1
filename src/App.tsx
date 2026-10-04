@@ -9,6 +9,7 @@ import { Navbar } from './components/Navbar';
 import { HandwrittenQuote } from './components/HandwrittenQuote';
 import { ContactModal } from './components/ContactModal';
 import { BookingModal } from './components/BookingModal';
+import { ChatbotWidget } from './components/ChatbotWidget';
 import { WorkPreviewModal } from './components/WorkPreviewModal';
 import { InfoModal } from './components/InfoModal';
 import { AboutSection } from './components/AboutSection';
@@ -354,6 +355,13 @@ export default function App() {
         isOpen={infoType !== null}
         onClose={() => setInfoType(null)}
         onOpenContact={() => setContactOpen(true)}
+      />
+
+      {/* Built-in Virtual Assistant / Chatbot Widget */}
+      <ChatbotWidget
+        onOpenBooking={() => setBookingOpen(true)}
+        onOpenContact={() => setContactOpen(true)}
+        onOpenWorkPreview={() => setWorkOpen(true)}
       />
     </div>
   );
