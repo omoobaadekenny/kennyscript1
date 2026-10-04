@@ -1,0 +1,27 @@
+{
+  "timestamp": "Sunday, October 4, 2026 at 5:09:36 AM",
+  "userInfo": {
+    "fullName": "David Nolan",
+    "firstName": "David",
+    "email": "david.nolan@paramount.com",
+    "phone": "+1 310 555 0199"
+  },
+  "sendToUser": true,
+  "messages": [
+    {
+      "role": "assistant",
+      "text": "Hi David! Nice to meet you. How can I help you with my screenplays, services, or creative process today?",
+      "timestamp": "10:14 PM"
+    },
+    {
+      "role": "user",
+      "text": "I loved the concept of The Silent Frequency. Can you tell me more about it?",
+      "timestamp": "10:15 PM"
+    },
+    {
+      "role": "assistant",
+      "text": "The Silent Frequency is an episodic sci-fi pilot about a rogue telegraphist transmitting encrypted analog counter-narratives in a voice-monitored metropolis.",
+      "timestamp": "10:15 PM"
+    }
+  ]
+}

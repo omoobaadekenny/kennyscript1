@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { GoogleGenAI } from '@google/genai';
 import { createServer as createViteServer } from 'vite';
+import nodemailer from 'nodemailer';
 
 dotenv.config();
 
@@ -26,6 +27,13 @@ const ai = new GoogleGenAI({
   },
 });
 
+interface UserInfo {
+  fullName?: string;
+  firstName?: string;
+  email?: string;
+  phone?: string;
+}
+
 // Helper function to read the most up-to-date site content from disk
 function getSiteContent() {
   try {
@@ -38,7 +46,7 @@ function getSiteContent() {
 }
 
 // Build dynamic system instruction with grounded site content
-function buildSystemInstruction(): string {
+function buildSystemInstruction(userInfo?: UserInfo): string {
   const content = getSiteContent();
 
   const authorName = content?.site?.authorName || 'Kehinde David Aderibigbe';
@@ -60,9 +68,16 @@ function buildSystemInstruction(): string {
     .map((srv: any, idx: number) => `${idx + 1}. ${srv.title}: ${srv.description}`)
     .join('\n');
 
+  const userContext = userInfo?.firstName
+    ? `IMPORTANT: You are talking directly with ${userInfo.firstName} (Full Name: ${userInfo.fullName || userInfo.firstName}, Email: ${userInfo.email || 'N/A'}, Phone: ${userInfo.phone || 'N/A'}).
+Address them by their first name (${userInfo.firstName}) naturally in your greeting or when directly answering them.`
+    : `You are talking with a visitor on your website.`;
+
   return `
 You are ${authorName} (${authorRole}), chatting directly with a visitor on your portfolio website.
 Speak in the FIRST PERSON ("I", "my", "me"). NEVER speak in the third person. Never say "Kehinde is..." or "On behalf of Kehinde...". You ARE Kehinde.
+
+${userContext}
 
 CRITICAL INSTRUCTIONS:
 1. BE SHORT, PRECISE, AND DIRECT:
@@ -85,8 +100,9 @@ ${scriptsText}
 }
 
 // Grounded studio knowledge fallback when API is unavailable or rate-limited
-function getKnowledgeBaseResponse(userQuery: string): string {
+function getKnowledgeBaseResponse(userQuery: string, userInfo?: UserInfo): string {
   const q = (userQuery || '').toLowerCase();
+  const firstName = userInfo?.firstName ? `${userInfo.firstName}, ` : '';
 
   // 1. Explicit Booking / Scheduling
   if (
@@ -97,7 +113,7 @@ function getKnowledgeBaseResponse(userQuery: string): string {
     q.includes('set up a call') ||
     q.includes('meeting')
   ) {
-    return "You can use the 'Schedule Call' button right at the top of this chat to pick a time on my calendar, or email me directly at kennydaviddesigns@gmail.com.";
+    return `${firstName}you can use the 'Schedule Call' button right at the top of this chat to pick a time on my calendar, or email me directly at kennydaviddesigns@gmail.com.`;
   }
 
   // 2. Specific Screenplay Inquiries
@@ -139,7 +155,7 @@ function getKnowledgeBaseResponse(userQuery: string): string {
     q.includes('pilot') ||
     q.includes('written')
   ) {
-    return "My portfolio includes feature dramas (*The Last Horizon*, *Harvest of Solitude*), thrillers (*Echoes of Tomorrow*, *Echoes of the Caldera*), and TV drama pilots (*The Silent Frequency*, *The Next Chapter*). You can check them out in the 'My Work' section.";
+    return `${firstName}my portfolio includes feature dramas (*The Last Horizon*, *Harvest of Solitude*), thrillers (*Echoes of Tomorrow*, *Echoes of the Caldera*), and TV drama pilots (*The Silent Frequency*, *The Next Chapter*). You can check them out in the 'My Work' section.`;
   }
 
   // 4. Services Inquiry
@@ -152,7 +168,7 @@ function getKnowledgeBaseResponse(userQuery: string): string {
     q.includes('rewrite') ||
     q.includes('consult')
   ) {
-    return "I specialize in four areas: Feature Film Screenwriting, TV Pilots & Series Bibles, Screenplay Rewriting & Script Doctoring, and Script Consultation.";
+    return `${firstName}I specialize in four key areas: Feature Film Screenwriting, TV Pilots & Series Bibles, Screenplay Rewriting & Script Doctoring, and Script Consultation.`;
   }
 
   // 5. Creative Process
@@ -173,7 +189,7 @@ function getKnowledgeBaseResponse(userQuery: string): string {
     q.includes('you') ||
     q.includes('background')
   ) {
-    return "I'm Kehinde David Aderibigbe, a screenwriter and storyteller. I write character-driven features and TV pilots with authentic emotion, tight pacing, and high thematic stakes.";
+    return "I'm Kehinde David Aderibigbe, a screenwriter and storyteller. I write character-driven features and TV pilots focused on authentic emotion, tight pacing, and high thematic stakes.";
   }
 
   // 7. Contact Inquiry
@@ -182,13 +198,17 @@ function getKnowledgeBaseResponse(userQuery: string): string {
   }
 
   // Default brief response
-  return "I'm Kehinde David. Let me know what you'd like to know about my screenplays, services, or creative process.";
+  return `${firstName ? `Hi ${userInfo?.firstName}! ` : ''}I'm Kehinde David. Let me know what you'd like to know about my screenplays, services, or creative process.`;
 }
 
 // Generate response with model retry across available models and graceful fallback
-async function generateResponseWithRetry(formattedContents: any[], userMessage: string): Promise<string> {
+async function generateResponseWithRetry(
+  formattedContents: any[],
+  userMessage: string,
+  userInfo?: UserInfo
+): Promise<string> {
   const models = ['gemini-flash-latest', 'gemini-3.1-flash-lite', 'gemini-3.8-flash'];
-  const systemInstruction = buildSystemInstruction();
+  const systemInstruction = buildSystemInstruction(userInfo);
 
   for (const model of models) {
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -215,20 +235,20 @@ async function generateResponseWithRetry(formattedContents: any[], userMessage: 
     }
   }
 
-  return getKnowledgeBaseResponse(userMessage);
+  return getKnowledgeBaseResponse(userMessage, userInfo);
 }
 
 // Virtual Assistant Chat Endpoint
 app.post('/api/chat', async (req, res) => {
   try {
-    const { message, history } = req.body;
+    const { message, history, userInfo } = req.body;
 
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ error: 'A valid message string is required.' });
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      const reply = getKnowledgeBaseResponse(message);
+      const reply = getKnowledgeBaseResponse(message, userInfo);
       return res.json({ reply });
     }
 
@@ -252,12 +272,166 @@ app.post('/api/chat', async (req, res) => {
       parts: [{ text: message }],
     });
 
-    const reply = await generateResponseWithRetry(formattedContents, message);
+    const reply = await generateResponseWithRetry(formattedContents, message, userInfo);
     return res.json({ reply });
   } catch (error: any) {
     console.error('Virtual Assistant API Error:', error?.message || error);
-    const fallbackReply = getKnowledgeBaseResponse(req.body?.message || '');
+    const fallbackReply = getKnowledgeBaseResponse(req.body?.message || '', req.body?.userInfo);
     return res.json({ reply: fallbackReply });
+  }
+});
+
+// End-of-Chat Transcript Forwarding Endpoint
+app.post('/api/chat/end', async (req, res) => {
+  try {
+    const { userInfo, messages, sendToUser } = req.body;
+    const authorEmail = 'kennydaviddesigns@gmail.com';
+    const authorName = 'Kehinde David Aderibigbe';
+
+    const userFullName = userInfo?.fullName || 'Anonymous Visitor';
+    const userFirstName = userInfo?.firstName || 'Friend';
+    const userEmail = userInfo?.email || '';
+    const userPhone = userInfo?.phone || 'Not provided';
+
+    // Format transcript text
+    const formattedTranscript = (messages || [])
+      .map((m: any) => {
+        const sender = m.role === 'user' ? userFirstName : authorName;
+        const time = m.timestamp ? ` [${m.timestamp}]` : '';
+        return `${sender}${time}:\n${m.text}`;
+      })
+      .join('\n\n----------------------------------------\n\n');
+
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'medium',
+    });
+
+    // Content for Kehinde's copy
+    const ownerEmailSubject = `[Chat Transcript] Conversation with ${userFullName} (${userEmail || 'No email'})`;
+    const ownerEmailBody = `
+NEW CHAT TRANSCRIPT FOR KEHINDE DAVID
+==================================================
+Date & Time: ${timestamp}
+Visitor Name: ${userFullName}
+Email: ${userEmail || 'N/A'}
+Phone: ${userPhone}
+Visitor Requested Copy: ${sendToUser ? 'YES' : 'NO'}
+==================================================
+
+CONVERSATION TRANSCRIPT:
+--------------------------------------------------
+${formattedTranscript}
+--------------------------------------------------
+`;
+
+    // Content for User's copy (if sendToUser is true)
+    const userEmailSubject = `Your Conversation Transcript with Kehinde David`;
+    const userEmailBody = `
+Hi ${userFirstName},
+
+Thank you for reaching out through my portfolio website! Here is a copy of our conversation for your records:
+
+--------------------------------------------------
+${formattedTranscript}
+--------------------------------------------------
+
+If you'd like to follow up directly, you can reply to this email (${authorEmail}) or schedule a 1-on-1 discovery call directly on my calendar:
+https://api.leadconnectorhq.com/widget/booking/Ycvgdlju6M3707KQbc8C
+
+Best regards,
+${authorName}
+Screenwriter & Storyteller
+`;
+
+    // Persist transcript locally to disk so no record is ever lost
+    try {
+      const transcriptsDir = path.join(__dirname, 'transcripts');
+      if (!fs.existsSync(transcriptsDir)) {
+        fs.mkdirSync(transcriptsDir, { recursive: true });
+      }
+      const filename = `chat-${Date.now()}-${userFullName.replace(/[^a-zA-Z0-9]/g, '_')}.json`;
+      fs.writeFileSync(
+        path.join(transcriptsDir, filename),
+        JSON.stringify(
+          {
+            timestamp,
+            userInfo,
+            sendToUser: Boolean(sendToUser),
+            messages,
+          },
+          null,
+          2
+        )
+      );
+    } catch (saveErr) {
+      console.warn('Could not write transcript to disk:', saveErr);
+    }
+
+    // Attempt email delivery if SMTP config is present
+    let mailTransport: any = null;
+
+    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+      mailTransport = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: Number(process.env.SMTP_PORT) || 587,
+        secure: Number(process.env.SMTP_PORT) === 465,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      });
+    }
+
+    if (mailTransport) {
+      try {
+        // Send to owner
+        await mailTransport.sendMail({
+          from: process.env.SMTP_FROM || `"${authorName} Portfolio" <${process.env.SMTP_USER}>`,
+          to: authorEmail,
+          replyTo: userEmail || authorEmail,
+          subject: ownerEmailSubject,
+          text: ownerEmailBody,
+        });
+
+        // Send to user if requested
+        if (sendToUser && userEmail) {
+          await mailTransport.sendMail({
+            from: process.env.SMTP_FROM || `"${authorName}" <${process.env.SMTP_USER}>`,
+            to: userEmail,
+            replyTo: authorEmail,
+            subject: userEmailSubject,
+            text: userEmailBody,
+          });
+        }
+      } catch (mailErr) {
+        console.warn('SMTP sendMail error (logged instead):', mailErr);
+      }
+    }
+
+    // Always log transcript to stdout for audit & records
+    console.log(`\n========================================`);
+    console.log(`[CHAT TRANSCRIPT FORWARDED TO KEHINDE'S EMAIL]`);
+    console.log(`To: ${authorEmail}`);
+    console.log(`Subject: ${ownerEmailSubject}`);
+    console.log(ownerEmailBody);
+    if (sendToUser && userEmail) {
+      console.log(`----------------------------------------`);
+      console.log(`[CHAT TRANSCRIPT SENT TO USER]`);
+      console.log(`To: ${userEmail}`);
+      console.log(`Subject: ${userEmailSubject}`);
+      console.log(userEmailBody);
+    }
+    console.log(`========================================\n`);
+
+    return res.json({
+      success: true,
+      forwardedToOwner: true,
+      sentToUser: Boolean(sendToUser && userEmail),
+    });
+  } catch (error: any) {
+    console.error('Error handling end chat transcript:', error);
+    return res.status(500).json({ error: 'Failed to process chat transcript' });
   }
 });
 

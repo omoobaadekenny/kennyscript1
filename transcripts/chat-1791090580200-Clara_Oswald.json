@@ -1,0 +1,27 @@
+{
+  "timestamp": "Sunday, October 4, 2026 at 5:09:40 AM",
+  "userInfo": {
+    "fullName": "Clara Oswald",
+    "firstName": "Clara",
+    "email": "clara@bbc.co.uk",
+    "phone": "+44 20 7946 0912"
+  },
+  "sendToUser": false,
+  "messages": [
+    {
+      "role": "assistant",
+      "text": "Hi Clara! Nice to meet you. How can I help you with my screenplays, services, or creative process today?",
+      "timestamp": "10:16 PM"
+    },
+    {
+      "role": "user",
+      "text": "What is your creative process?",
+      "timestamp": "10:16 PM"
+    },
+    {
+      "role": "assistant",
+      "text": "My process follows four stages: Idea, Development, Writing, and Refinement.",
+      "timestamp": "10:17 PM"
+    }
+  ]
+}
