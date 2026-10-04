@@ -6,6 +6,7 @@ import fs from 'fs';
 import { GoogleGenAI } from '@google/genai';
 import { createServer as createViteServer } from 'vite';
 import nodemailer from 'nodemailer';
+import { generateSensitiveResponse } from './src/utils/storyChatEngine.ts';
 
 dotenv.config();
 
@@ -80,17 +81,24 @@ Speak in the FIRST PERSON ("I", "my", "me"). NEVER speak in the third person. Ne
 ${userContext}
 
 CRITICAL INSTRUCTIONS:
-1. BE SHORT, PRECISE, AND DIRECT:
-   - Answer ONLY what was specifically asked in 1 to 3 short sentences (or 2-3 brief bullet points if listing).
+1. BE SENSITIVE AND SPECIFIC TO WHAT WAS ASKED:
+   - If asked about a specific screenplay (*The Last Horizon*, *Echoes of Tomorrow*, *Beyond the Gate*, etc.), answer ONLY about that title.
+   - If asked about a genre (sci-fi, thriller, drama), mention only the scripts in that genre.
+   - If asked about services (rewriting, consultation, development), describe only what was asked.
+   - NEVER recite an unrequested list of your whole portfolio or repeated stock answers.
+2. BE SHORT, PRECISE, AND DIRECT:
+   - Answer strictly in 1 to 3 short sentences (or 2-3 brief bullet points if listing).
    - Maximum 30 to 60 words per response.
-   - Do NOT give long lectures, unnecessary marketing fluff, or long introductory pleasantries.
-2. DO NOT INCLUDE SCHEDULING LINKS OR CALL INVITES:
+   - No unnecessary marketing fluff or repetitive introductory phrases.
+3. DO NOT INCLUDE SCHEDULING LINKS OR CALL INVITES:
    - There is already a "Schedule Call" button permanently visible at the top of the chat widget.
-   - Do NOT include scheduling links, URLs, or prompts like "Feel free to book a call" or "Schedule a call with me" in your responses UNLESS the user explicitly asks how to book or schedule a meeting.
+   - Do NOT include scheduling links, URLs, or prompts like "Feel free to book a call" in your responses UNLESS the user explicitly asks how to book or schedule a meeting.
    - If the user explicitly asks how to book or schedule a meeting, simply say: "You can click the 'Schedule Call' button right above in this window to pick a time on my calendar, or reach me at ${email}."
-3. ACCURATE KNOWLEDGE BASE:
+4. ACCURATE KNOWLEDGE BASE:
    - Location: Based in ${location}, working with teams globally.
    - Email: ${email}
+   - Formats: Feature Screenplays (98-116 pages), TV Drama Pilots (60 min & series bibles), and Short Film Scripts (5-25 pages for indie productions and festival entries).
+   - Short Films: I write, consult on, and polish short film scripts for indie directors, film festivals, and proofs of concept.
    - My Services:
 ${servicesText}
    - My Scripts & Works:
@@ -99,143 +107,47 @@ ${scriptsText}
 `;
 }
 
-// Grounded studio knowledge fallback when API is unavailable or rate-limited
-function getKnowledgeBaseResponse(userQuery: string, userInfo?: UserInfo): string {
-  const q = (userQuery || '').toLowerCase();
-  const firstName = userInfo?.firstName ? `${userInfo.firstName}, ` : '';
-
-  // 1. Explicit Booking / Scheduling
-  if (
-    q.includes('schedule') ||
-    q.includes('book') ||
-    q.includes('calendar') ||
-    q.includes('appointment') ||
-    q.includes('set up a call') ||
-    q.includes('meeting')
-  ) {
-    return `${firstName}you can use the 'Schedule Call' button right at the top of this chat to pick a time on my calendar, or email me directly at kennydaviddesigns@gmail.com.`;
-  }
-
-  // 2. Specific Screenplay Inquiries
-  if (q.includes('last horizon')) {
-    return "My feature drama *The Last Horizon* (108 pages) follows a coastal harbourmaster who shelters a fugitive holding the deed to the city’s last heritage dock while reconciling with his daughter.";
-  }
-
-  if (q.includes('echoes of tomorrow')) {
-    return "*Echoes of Tomorrow* (114 pages) is a high-stakes neo-noir thriller about a forensic audio analyst who discovers an algorithmic syndicate orchestrating political assassinations.";
-  }
-
-  if (q.includes('next chapter') || q.includes('the next chapter')) {
-    return "*The Next Chapter* is a 60-minute drama pilot and series bible centering on three estranged siblings who uncover their late father’s clandestine double life at their ancestral vineyard.";
-  }
-
-  if (q.includes('beyond the gate')) {
-    return "*Beyond the Gate* (116 pages) is a dystopian sci-fi feature where a courier escorts an orphaned bio-engineer through forbidden zones to activate a city's failsafe barrier.";
-  }
-
-  if (q.includes('caldera') || q.includes('echoes of the caldera')) {
-    return "*Echoes of the Caldera* (Nicholl Fellowship Semifinalist, 112 pages) is a psychological thriller about a vulcanologist unearthing a suppressed corporate experiment tied to his sister's disappearance.";
-  }
-
-  if (q.includes('silent frequency')) {
-    return "*The Silent Frequency* (Austin Film Festival Second Rounder) is an episodic sci-fi pilot about a rogue telegraphist transmitting encrypted analog counter-narratives in a voice-monitored metropolis.";
-  }
-
-  if (q.includes('harvest') || q.includes('harvest of solitude')) {
-    return "*Harvest of Solitude* (Black List Recommended 8/10, 98 pages) is a drama following a West African botanical archivist fighting to preserve ancestral agricultural remedies against patent cartels.";
-  }
-
-  // 3. General Scripts Inquiry
-  if (
-    q.includes('script') ||
-    q.includes('work') ||
-    q.includes('portfolio') ||
-    q.includes('movie') ||
-    q.includes('film') ||
-    q.includes('pilot') ||
-    q.includes('written')
-  ) {
-    return `${firstName}my portfolio includes feature dramas (*The Last Horizon*, *Harvest of Solitude*), thrillers (*Echoes of Tomorrow*, *Echoes of the Caldera*), and TV drama pilots (*The Silent Frequency*, *The Next Chapter*). You can check them out in the 'My Work' section.`;
-  }
-
-  // 4. Services Inquiry
-  if (
-    q.includes('service') ||
-    q.includes('offer') ||
-    q.includes('hire') ||
-    q.includes('what do you do') ||
-    q.includes('doctor') ||
-    q.includes('rewrite') ||
-    q.includes('consult')
-  ) {
-    return `${firstName}I specialize in four key areas: Feature Film Screenwriting, TV Pilots & Series Bibles, Screenplay Rewriting & Script Doctoring, and Script Consultation.`;
-  }
-
-  // 5. Creative Process
-  if (
-    q.includes('process') ||
-    q.includes('how do you work') ||
-    q.includes('steps') ||
-    q.includes('workflow')
-  ) {
-    return "My process follows four stages: Idea (core spark), Development (structural architecture & character arcs), Writing (scene design & dialogue), and Refinement (pacing & polish).";
-  }
-
-  // 6. Bio / Profile
-  if (
-    q.includes('who') ||
-    q.includes('about') ||
-    q.includes('bio') ||
-    q.includes('you') ||
-    q.includes('background')
-  ) {
-    return "I'm Kehinde David Aderibigbe, a screenwriter and storyteller. I write character-driven features and TV pilots focused on authentic emotion, tight pacing, and high thematic stakes.";
-  }
-
-  // 7. Contact Inquiry
-  if (q.includes('contact') || q.includes('email') || q.includes('reach')) {
-    return "You can reach me directly at kennydaviddesigns@gmail.com.";
-  }
-
-  // Default brief response
-  return `${firstName ? `Hi ${userInfo?.firstName}! ` : ''}I'm Kehinde David. Let me know what you'd like to know about my screenplays, services, or creative process.`;
-}
-
 // Generate response with model retry across available models and graceful fallback
 async function generateResponseWithRetry(
   formattedContents: any[],
   userMessage: string,
   userInfo?: UserInfo
 ): Promise<string> {
-  const models = ['gemini-flash-latest', 'gemini-3.1-flash-lite', 'gemini-3.8-flash'];
+  if (!process.env.GEMINI_API_KEY) {
+    return generateSensitiveResponse(userMessage, userInfo);
+  }
+
+  const models = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
   const systemInstruction = buildSystemInstruction(userInfo);
 
   for (const model of models) {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const response = await ai.models.generateContent({
-          model,
-          contents: formattedContents,
-          config: {
-            systemInstruction,
-            temperature: 0.6,
-          },
-        });
+    try {
+      // 5-second timeout per attempt to guarantee fast response
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error(`Timeout for ${model}`)), 5000)
+      );
 
-        if (response && response.text) {
-          return response.text.trim();
-        }
-      } catch (err: any) {
-        const isQuotaOrLoad = err?.message?.includes('429') || err?.message?.includes('503') || err?.message?.includes('quota');
-        if (isQuotaOrLoad) {
-          break;
-        }
-        await new Promise((resolve) => setTimeout(resolve, 200 * (attempt + 1)));
+      const generatePromise = ai.models.generateContent({
+        model,
+        contents: formattedContents,
+        config: {
+          systemInstruction,
+          temperature: 0.5,
+        },
+      });
+
+      const response = await Promise.race([generatePromise, timeoutPromise]);
+
+      if (response && response.text && response.text.trim().length > 0) {
+        return response.text.trim();
       }
+    } catch (err: any) {
+      console.warn(`Model ${model} attempt failed:`, err?.message || err);
     }
   }
 
-  return getKnowledgeBaseResponse(userMessage, userInfo);
+  // Gracefully fallback to sensitive context-aware response engine
+  return generateSensitiveResponse(userMessage, userInfo);
 }
 
 // Virtual Assistant Chat Endpoint
@@ -248,7 +160,7 @@ app.post('/api/chat', async (req, res) => {
     }
 
     if (!process.env.GEMINI_API_KEY) {
-      const reply = getKnowledgeBaseResponse(message, userInfo);
+      const reply = generateSensitiveResponse(message, userInfo);
       return res.json({ reply });
     }
 
@@ -276,7 +188,7 @@ app.post('/api/chat', async (req, res) => {
     return res.json({ reply });
   } catch (error: any) {
     console.error('Virtual Assistant API Error:', error?.message || error);
-    const fallbackReply = getKnowledgeBaseResponse(req.body?.message || '', req.body?.userInfo);
+    const fallbackReply = generateSensitiveResponse(req.body?.message || '', req.body?.userInfo);
     return res.json({ reply: fallbackReply });
   }
 });

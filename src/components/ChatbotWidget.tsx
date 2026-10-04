@@ -15,6 +15,7 @@ import {
   LogOut,
   Bot,
 } from 'lucide-react';
+import { generateSensitiveResponse } from '../utils/storyChatEngine';
 
 interface Message {
   id: string;
@@ -173,68 +174,7 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
 
   // Client-side grounded concise first-person fallback
   const getClientSideAnswer = (query: string): string => {
-    const q = query.toLowerCase();
-    const namePrefix = userInfo?.firstName ? `${userInfo.firstName}, ` : '';
-
-    if (
-      q.includes('schedule') ||
-      q.includes('book') ||
-      q.includes('calendar') ||
-      q.includes('call') ||
-      q.includes('appointment') ||
-      q.includes('meeting')
-    ) {
-      return `${namePrefix}you can click the 'Schedule Call' button right at the top of this window to pick a time on my calendar, or email me at kennydaviddesigns@gmail.com.`;
-    }
-
-    if (
-      q.includes('service') ||
-      q.includes('offer') ||
-      q.includes('hire') ||
-      q.includes('what do you do') ||
-      q.includes('doctor') ||
-      q.includes('rewrite') ||
-      q.includes('consult')
-    ) {
-      return `${namePrefix}I specialize in four key areas: Feature Film Screenwriting, TV Pilots & Series Bibles, Screenplay Rewriting & Script Doctoring, and Script Consultation.`;
-    }
-
-    if (
-      q.includes('script') ||
-      q.includes('work') ||
-      q.includes('portfolio') ||
-      q.includes('movie') ||
-      q.includes('film') ||
-      q.includes('pilot') ||
-      q.includes('written')
-    ) {
-      return `${namePrefix}my portfolio includes feature dramas (*The Last Horizon*, *Harvest of Solitude*), thrillers (*Echoes of Tomorrow*, *Echoes of the Caldera*), and TV drama pilots (*The Silent Frequency*, *The Next Chapter*). You can check them out in the 'My Work' section.`;
-    }
-
-    if (
-      q.includes('process') ||
-      q.includes('how do you work') ||
-      q.includes('steps') ||
-      q.includes('workflow')
-    ) {
-      return "My process follows four stages: Idea (core spark), Development (structural architecture & character arcs), Writing (scene design & dialogue), and Refinement (pacing & polish).";
-    }
-
-    if (
-      q.includes('who') ||
-      q.includes('about') ||
-      q.includes('bio') ||
-      q.includes('you') ||
-      q.includes('background')
-    ) {
-      return "I'm Kehinde David Aderibigbe, a screenwriter and storyteller. I write character-driven features and TV pilots focused on authentic emotion, tight pacing, and high thematic stakes.";
-    }
-
-    if (q.includes('contact') || q.includes('email') || q.includes('reach')) {
-      return "You can reach me directly at kennydaviddesigns@gmail.com.";
-    }
-
-    return `${namePrefix ? `Hi ${userInfo?.firstName}! ` : ''}I'm Kehinde David. Let me know what you'd like to know about my screenplays, services, or creative process.`;
+    return generateSensitiveResponse(query, userInfo);
   };
 
   // Check if message signifies end of chat
@@ -365,27 +305,47 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
         text: m.text,
       }));
 
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message,
-          history: historyPayload,
-          userInfo: userInfo
-            ? {
-                fullName: userInfo.fullName,
-                firstName: userInfo.firstName,
-                email: userInfo.email,
-                phone: userInfo.phone,
-              }
-            : undefined,
-        }),
-      });
+      let replyText = '';
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-      const data = await res.json().catch(() => ({}));
-      const replyText = data.reply || getClientSideAnswer(message);
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message,
+            history: historyPayload,
+            userInfo: userInfo
+              ? {
+                  fullName: userInfo.fullName,
+                  firstName: userInfo.firstName,
+                  email: userInfo.email,
+                  phone: userInfo.phone,
+                }
+              : undefined,
+          }),
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          const data = await res.json().catch(() => ({}));
+          if (data && typeof data.reply === 'string' && data.reply.trim().length > 0) {
+            replyText = data.reply.trim();
+          }
+        }
+      } catch (fetchErr) {
+        clearTimeout(timeoutId);
+        // /api/chat unreachable (e.g. static GitHub Pages deployment or network issue)
+      }
+
+      if (!replyText) {
+        replyText = getClientSideAnswer(message);
+      }
 
       const assistantReply: Message = {
         id: `assistant-${Date.now()}`,
@@ -396,7 +356,7 @@ export const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
 
       setMessages((prev) => [...prev, assistantReply]);
     } catch (err: any) {
-      console.warn('Network issue handled smoothly with local story engine:', err);
+      console.warn('Handling message with sensitive story engine:', err);
       const answer = getClientSideAnswer(message);
       const fallbackReply: Message = {
         id: `assistant-${Date.now()}`,
